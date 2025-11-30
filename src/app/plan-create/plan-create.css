@@ -1,0 +1,324 @@
+/* Contenedor general */
+.contenedor-plan {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px 24px;
+}
+
+/* -------- PROGRESO ---------- */
+
+.progress-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.progress-bar {
+  flex: 1;
+  height: 6px;
+  background: #e5e5e5;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background: #007bff;
+  transition: width 0.3s ease;
+}
+
+.progress-label {
+  font-size: 13px;
+  color: #555;
+}
+
+/* -------- PASOS ---------- */
+
+.pasos {
+  display: flex;
+  flex-wrap: nowrap;
+  border-bottom: 1px solid #e0e0e0;
+  margin-bottom: 18px;
+}
+
+.paso {
+  padding: 8px 14px;
+  font-size: 13px;
+  cursor: pointer;
+  border-radius: 4px 4px 0 0;
+  margin-right: 4px;
+  background: #f5f5f5;
+  color: #555;
+}
+
+.paso.activo {
+  background: #ffffff;
+  border: 1px solid #d0d0d0;
+  border-bottom-color: #ffffff;
+  font-weight: 600;
+}
+
+/* -------- SECCIONES ---------- */
+
+.seccion {
+  margin-top: 10px;
+  background: #ffffff;
+  padding: 16px;
+  border-radius: 6px;
+  border: 1px solid #e0e0e0;
+}
+
+.seccion h3 {
+  margin-top: 0;
+  margin-bottom: 14px;
+}
+
+/* Grid de formularios simples */
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(260px, 1fr));
+  gap: 14px 18px;
+  margin-bottom: 16px;
+}
+
+label {
+  font-size: 13px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+input,
+select,
+textarea {
+  font-size: 13px;
+  padding: 6px 8px;
+  border-radius: 4px;
+  border: 1px solid #cfcfcf;
+}
+
+textarea {
+  resize: vertical;
+}
+
+/* Navegación de pasos */
+.acciones-paso {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.btn-primario {
+  background: #007bff;
+  border: none;
+  color: white;
+  padding: 6px 14px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.btn-primario:hover {
+  background: #0064d6;
+}
+
+/* -------- PLANIFICACIÓN CURRICULAR ---------- */
+
+.semestre-block {
+  margin-top: 18px;
+}
+
+.semestre-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-weight: bold;
+  font-size: 15px;
+  margin-bottom: 6px;
+}
+
+.semestre-tools {
+  display: flex;
+  gap: 6px;
+}
+
+.semestre-tool-btn {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+/* Botón agregar período */
+.btn-add-periodo {
+  padding: 6px 14px;
+  margin-bottom: 10px;
+  border-radius: 4px;
+  background: #2b8a3e;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.btn-add-periodo:hover {
+  background: #216f32;
+}
+
+/* Botón agregar asignaturas */
+.btn-add-asig {
+  margin-bottom: 10px;
+  padding: 6px 14px;
+  font-size: 13px;
+  background: #007bff;
+  border: none;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.btn-add-asig:hover {
+  background: #0064d6;
+}
+
+/* Tabla principal de planificación */
+
+.plan-table-container {
+  margin-top: 4px;
+  border: 1px solid #dcdcdc;
+  border-radius: 6px;
+  background: white;
+  padding: 10px 10px 6px;
+}
+
+.plan-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.plan-table thead th {
+  background: #f5f5f5;
+  font-weight: 600;
+  padding: 8px 6px;
+  border-bottom: 2px solid #dadada;
+}
+
+/* algo más de espacio en HT y HP */
+.plan-table td {
+  padding: 8px 6px;
+  border-bottom: 1px solid #eee;
+}
+
+.plan-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* Anchos de columnas */
+.col-codigo {
+  width: 110px;
+}
+.col-nombre {
+  width: 260px;
+}
+.col-creditos,
+.col-ht,
+.col-hp {
+  width: 70px;
+  text-align: center;
+}
+.col-componente {
+  width: 200px;
+}
+.col-acciones {
+  width: 110px;
+  text-align: center;
+}
+
+/* Botones en la tabla */
+.action-btn {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 15px;
+  margin: 0 4px;
+  padding: 4px;
+}
+
+.action-btn:hover {
+  opacity: 0.7;
+}
+
+/* Fila de totales */
+.total-row td {
+  font-weight: bold;
+  background: #f1f1f1;
+}
+
+/* Utilidad */
+.text-center {
+  text-align: center;
+}
+
+/* -------- MODAL ASIGNATURAS ---------- */
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal {
+  background: #ffffff;
+  border-radius: 6px;
+  min-width: 780px;
+  max-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  padding: 14px 16px;
+}
+
+.modal h3 {
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+.tabla-modal {
+  flex: 1;
+  overflow: auto;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+}
+
+.tabla-modal table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.tabla-modal thead th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: #f5f5f5;
+  border-bottom: 1px solid #d0d0d0;
+  padding: 6px 6px;
+}
+
+.tabla-modal td {
+  padding: 6px 6px;
+  border-bottom: 1px solid #eee;
+}
+
+.acciones-modal {
+  margin-top: 10px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}

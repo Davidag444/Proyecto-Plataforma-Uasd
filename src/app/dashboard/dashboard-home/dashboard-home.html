@@ -1,0 +1,80 @@
+<!-- src/app/dashboard/dashboard-home/dashboard-home.html -->
+
+<div class="cards-row">
+  <div class="stat-card solicitado">
+    <div class="stat-icon">📝</div>
+    <div>
+      <div class="stat-number">{{ solicitados }}</div>
+      <div class="stat-label">Planes solicitados</div>
+    </div>
+  </div>
+
+  <div class="stat-card revision">
+    <div class="stat-icon">⏳</div>
+    <div>
+      <div class="stat-number">{{ revision }}</div>
+      <div class="stat-label">Planes en revisión</div>
+    </div>
+  </div>
+
+  <div class="stat-card validado">
+    <div class="stat-icon">✅</div>
+    <div>
+      <div class="stat-number">{{ validados }}</div>
+      <div class="stat-label">Planes validados</div>
+    </div>
+  </div>
+
+  <div class="stat-card total">
+    <div class="stat-icon">📊</div>
+    <div>
+      <div class="stat-number">{{ total }}</div>
+      <div class="stat-label">Total de planes</div>
+    </div>
+  </div>
+</div>
+
+<!-- ================= NOTIFICACIONES ================= -->
+<div class="notificaciones">
+  <h3>Notificaciones</h3>
+
+  <!-- Sin notificaciones -->
+  <div *ngIf="notificaciones.length === 0" class="notif-empty">
+    No tienes notificaciones nuevas.
+  </div>
+
+  <!-- Lista de notificaciones (solo planes denegados) -->
+  <div *ngIf="notificaciones.length > 0" class="notif-list">
+    <div
+      class="notif-card"
+      *ngFor="let n of notificaciones"
+    >
+      <div class="notif-icon">⚠️</div>
+
+      <div class="notif-body">
+        <div class="notif-title">
+          <span class="notif-title-label">Plan denegado:</span>
+          <span class="notif-title-name">{{ n.nombrePlan }}</span>
+        </div>
+
+        <div class="notif-comment">
+          {{ n.comentario }}
+        </div>
+
+        <div class="notif-footer">
+          <span class="notif-date">
+            {{ n.fecha | date: 'MM/dd/yy' }}
+          </span>
+
+          <button
+            type="button"
+            class="notif-btn"
+            (click)="editarPlanDesdeNotificacion(n.planId)"
+          >
+            Editar plan
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,114 @@
+<!-- src/app/departamentos/departamentos.html -->
+
+<div class="deptos-container">
+  <h2>Departamentos</h2>
+
+  <!-- Barra superior -->
+  <div class="toolbar">
+    <button class="btn-primary" type="button" (click)="nuevoDepartamento()">
+      + Nuevo Departamento
+    </button>
+
+    <div class="filter">
+      <label for="buscar">Buscar</label>
+      <input
+        id="buscar"
+        type="text"
+        [(ngModel)]="filtro"
+        placeholder="Nombre, área, correo..."
+      />
+    </div>
+  </div>
+
+  <!-- Tabla de departamentos -->
+  <div class="table-wrapper">
+    <table class="tabla">
+      <thead>
+        <tr>
+          <th class="col-check"></th>
+          <th>Nombre</th>
+          <th>Teléfono</th>
+          <th>Correo electrónico</th>
+          <th>Área de conocimiento</th>
+          <th class="col-actions">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let d of departamentosFiltrados">
+          <td class="col-check"><input type="checkbox" /></td>
+          <td>{{ d.nombre }}</td>
+          <td>{{ d.telefono }}</td>
+          <td>{{ d.correo }}</td>
+          <td>{{ d.areaConocimiento }}</td>
+          <td class="col-actions">
+            <button type="button" title="Editar" (click)="editarDepartamento(d)">
+              ✏️
+            </button>
+            <button type="button" title="Eliminar" (click)="eliminarDepartamento(d)">
+              🗑
+            </button>
+          </td>
+        </tr>
+
+        <tr *ngIf="!departamentosFiltrados.length">
+          <td colspan="6" class="no-data">
+            No hay departamentos registrados.
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Formulario (modal sencillo) -->
+  <div class="modal-backdrop" *ngIf="mostrarForm">
+    <div class="modal">
+      <h3>Departamento</h3>
+
+      <form (ngSubmit)="guardarDepartamento()">
+        <div class="form-row">
+          <label>Nombre</label>
+          <input
+            type="text"
+            [(ngModel)]="deptoActual.nombre"
+            name="nombre"
+            required
+          />
+        </div>
+
+        <div class="form-row">
+          <label>Teléfono</label>
+          <input
+            type="text"
+            [(ngModel)]="deptoActual.telefono"
+            name="telefono"
+          />
+        </div>
+
+        <div class="form-row">
+          <label>Correo electrónico</label>
+          <input
+            type="email"
+            [(ngModel)]="deptoActual.correo"
+            name="correo"
+          />
+        </div>
+
+        <div class="form-row">
+          <label>Área de conocimiento</label>
+          <input
+            type="text"
+            [(ngModel)]="deptoActual.areaConocimiento"
+            name="areaConocimiento"
+          />
+        </div>
+
+        <div class="modal-actions">
+          <button type="submit" class="btn-primary">Guardar</button>
+          <button type="button" class="btn-danger" (click)="cancelarForm()">
+            Cancelar
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

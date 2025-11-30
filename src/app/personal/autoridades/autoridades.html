@@ -1,0 +1,118 @@
+<!-- src/app/personal/autoridades/autoridades.html -->
+<div class="autoridades-layout">
+  <div class="autoridades-list">
+    <div class="list-header">
+      <h2>Autoridades Universidad Autónoma de Santo Domingo</h2>
+      <div class="list-header-actions">
+        <button class="btn-primary" (click)="nuevaAutoridad()">
+          + Nueva autoridad
+        </button>
+        <input
+          type="text"
+          placeholder="Buscar por nombre o cédula"
+          [(ngModel)]="filtro"
+        />
+      </div>
+    </div>
+
+    <table class="table-simple">
+      <thead>
+        <tr>
+          <th>Identificación</th>
+          <th>Nombre</th>
+          <th>Cargo</th>
+          <th>Departamento</th>
+          <th style="width: 80px"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          *ngFor="let a of listaFiltrada"
+          (dblclick)="editarAutoridad(a)"
+          class="clickable"
+        >
+          <td>{{ a.identificacion }}</td>
+          <td>{{ a.nombres }} {{ a.apellidos }}</td>
+          <td>{{ a.cargo }}</td>
+          <td>{{ a.departamento }}</td>
+          <td>
+            <button class="btn-link" (click)="editarAutoridad(a)">
+              Editar
+            </button>
+          </td>
+        </tr>
+        <tr *ngIf="!listaFiltrada.length">
+          <td colspan="5" class="empty">No hay autoridades registradas.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="autoridades-form" *ngIf="mostrandoForm">
+    <h3>
+      {{ editando ? 'Editar autoridad' : 'Crear Autoridad' }}
+    </h3>
+
+    <form (ngSubmit)="guardar()">
+      <label>
+        Número de identificación
+        <input
+          type="text"
+          [(ngModel)]="modelo.identificacion"
+          name="identificacion"
+        />
+      </label>
+
+      <label>
+        Nombres
+        <input type="text" [(ngModel)]="modelo.nombres" name="nombres" />
+      </label>
+
+      <label>
+        Apellidos
+        <input
+          type="text"
+          [(ngModel)]="modelo.apellidos"
+          name="apellidos"
+        />
+      </label>
+
+      <label>
+        Teléfono
+        <input
+          type="text"
+          [(ngModel)]="modelo.telefono"
+          name="telefono"
+        />
+      </label>
+
+      <label>
+        Correo electrónico
+        <input
+          type="email"
+          [(ngModel)]="modelo.correo"
+          name="correo"
+        />
+      </label>
+
+      <label>
+        Cargo
+        <input type="text" [(ngModel)]="modelo.cargo" name="cargo" />
+      </label>
+
+      <label>
+        Departamento
+        <input
+          type="text"
+          [(ngModel)]="modelo.departamento"
+          name="departamento"
+        />
+      </label>
+
+      <div class="form-actions">
+        <button type="submit" class="btn-primary">Guardar</button>
+        <button type="button" (click)="cancelar()">Cancelar</button>
+      </div>
+    </form>
+  </div>
+</div>

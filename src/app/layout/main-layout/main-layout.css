@@ -1,0 +1,245 @@
+/* src/app/layout/main-layout/main-layout.css */
+
+/* ---------- LAYOUT GENERAL ---------- */
+
+.app-root {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  font-family: 'Segoe UI', Arial, sans-serif;
+}
+
+.layout-body {
+  display: flex;
+  flex: 1;
+}
+
+/* ---------- TOPBAR ---------- */
+
+.topbar {
+  height: 56px;
+  background-color: #0050a0;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+}
+
+.topbar-title {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 13px;
+}
+
+.welcome-text {
+  white-space: nowrap;
+}
+
+.profile-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: none;
+  background-color: #ffffff;
+  color: #0050a0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.profile-icon i {
+  font-size: 16px;
+}
+
+.profile-icon:hover {
+  background-color: #e0e0e0;
+}
+
+.logout-btn {
+  border: 1px solid #ffffff;
+  background: transparent;
+  color: #fff;
+  padding: 4px 10px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.logout-btn:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+/* ---------- SIDEBAR ---------- */
+
+.sidebar {
+  width: 240px;
+  background-color: #001b33;
+  color: #fff;
+}
+
+.sidebar-header {
+  padding: 18px 20px;
+  font-size: 17px;
+  font-weight: bold;
+  background-color: #002347;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.nav-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  padding: 12px 20px;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  color: #e6e6e6;
+  gap: 10px;
+  text-decoration: none;
+  transition: background 0.2s ease;
+}
+
+.nav-item i {
+  font-size: 16px;
+  width: 20px;
+  text-align: center;
+}
+
+.nav-item:hover {
+  background-color: #003366;
+}
+
+li.active > .nav-item {
+  background-color: #004b8d;
+  font-weight: 600;
+}
+
+/* Menú colapsable (usado para Personal y Competencias) */
+
+.nav-item-personal {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 20px;
+  cursor: pointer;
+  color: #e6e6e6;
+}
+
+.nav-item-personal:hover {
+  background-color: #003366;
+}
+
+.personal-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.personal-left i {
+  font-size: 16px;
+  width: 20px;
+  text-align: center;
+}
+
+.arrow {
+  font-size: 12px;
+  transition: transform 0.2s ease;
+}
+
+.arrow.open {
+  transform: rotate(180deg);
+}
+
+.sub-item {
+  display: block;
+  padding: 10px 45px;
+  font-size: 14px;
+  color: #dcdcdc;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.sub-item:hover {
+  background-color: #003366;
+}
+
+li.active > .sub-item {
+  background-color: #004b8d;
+}
+
+/* ---------- CONTENIDO ---------- */
+
+.content {
+  flex: 1;
+  background-color: #f4f6fb;
+  padding: 0;
+  overflow: auto;
+}
+
+/* ---------- PERFIL (modal sencillo) ---------- */
+
+.profile-backdrop {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.35);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 80px;
+  z-index: 1000;
+}
+
+.profile-modal {
+  background-color: #ffffff;
+  padding: 16px 20px;
+  border-radius: 4px;
+  max-width: 420px;
+  width: 100%;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+}
+
+.profile-modal h2 {
+  margin-top: 0;
+  margin-bottom: 12px;
+}
+
+.form-row {
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-row label {
+  font-size: 12px;
+  margin-bottom: 4px;
+}
+
+.form-row input {
+  padding: 4px 6px;
+  font-size: 13px;
+}
+
+.profile-actions {
+  margin-top: 12px;
+  display: flex;
+  gap: 8px;
+}
+
+.profile-actions button {
+  padding: 5px 12px;
+  font-size: 12px;
+  cursor: pointer;
+}

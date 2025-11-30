@@ -1,0 +1,135 @@
+<!-- src/app/educacion-virtual/educacion-virtual.html -->
+
+<div class="edu-container">
+  <h2>Educación Virtual</h2>
+
+  <!-- A) Infraestructura Tecnológica -->
+  <section class="section-card">
+    <h3>Infraestructura Tecnológica para Educación Virtual (DEADV-01)</h3>
+
+    <div class="table-wrapper">
+      <table class="tabla">
+        <thead>
+          <tr>
+            <th>Recurso</th>
+            <th class="col-cantidad">Cantidad</th>
+            <th>Área</th>
+            <th class="col-disponible">Disponible</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let r of recursosInfraestructura; let i = index">
+            <td>{{ r.nombre }}</td>
+            <td class="col-cantidad">
+              <input
+                type="number"
+                min="0"
+                [(ngModel)]="r.cantidad"
+                [name]="'inf-cantidad-' + i"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                [(ngModel)]="r.area"
+                [name]="'inf-area-' + i"
+              />
+            </td>
+            <td class="col-disponible">
+              <label>
+                <input
+                  type="radio"
+                  [name]="'inf-disp-' + i"
+                  [value]="true"
+                  [(ngModel)]="r.disponible"
+                />
+                Sí
+              </label>
+              <label>
+                <input
+                  type="radio"
+                  [name]="'inf-disp-' + i"
+                  [value]="false"
+                  [(ngModel)]="r.disponible"
+                />
+                No
+              </label>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="actions">
+      <button type="button" class="btn-primary" (click)="guardarInfraestructura()">
+        Guardar
+      </button>
+    </div>
+  </section>
+
+  <!-- B) Recursos Audiovisuales -->
+  <section class="section-card">
+    <h3>Recursos Audiovisuales</h3>
+
+    <div class="table-wrapper">
+      <table class="tabla">
+        <thead>
+          <tr>
+            <th>Recurso</th>
+            <th class="col-cantidad">Cantidad</th>
+            <th>Área</th>
+            <th class="col-disponible">Disponible</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let r of recursosAudiovisuales; let i = index">
+            <td>{{ r.nombre }}</td>
+            <td class="col-cantidad">
+              <input
+                type="number"
+                min="0"
+                [(ngModel)]="r.cantidad"
+                [name]="'aud-cantidad-' + i"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                [(ngModel)]="r.area"
+                [name]="'aud-area-' + i"
+              />
+            </td>
+            <td class="col-disponible">
+              <label>
+                <input
+                  type="radio"
+                  [name]="'aud-disp-' + i"
+                  [value]="true"
+                  [(ngModel)]="r.disponible"
+                />
+                Sí
+              </label>
+              <label>
+                <input
+                  type="radio"
+                  [name]="'aud-disp-' + i"
+                  [value]="false"
+                  [(ngModel)]="r.disponible"
+                />
+                No
+              </label>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="actions">
+      <button type="button" class="btn-primary" (click)="guardarAudiovisuales()">
+        Guardar
+      </button>
+    </div>
+  </section>
+</div>

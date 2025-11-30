@@ -1,0 +1,31 @@
+.personal-wrapper {
+  padding: 1.5rem;
+}
+
+.personal-tabs {
+  display: flex;
+  gap: 1rem;
+  margin: 1rem 0 1.5rem;
+  border-bottom: 1px solid #ddd;
+}
+
+.personal-tabs a {
+  padding: 0.5rem 1rem;
+  text-decoration: none;
+  border-radius: 4px 4px 0 0;
+  border: 1px solid transparent;
+}
+
+.personal-tabs a.active {
+  border-color: #0d6efd #0d6efd #ffffff;
+  background: #ffffff;
+  color: #0d6efd;
+  font-weight: 600;
+}
+
+.personal-content {
+  background: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 1rem;
+}

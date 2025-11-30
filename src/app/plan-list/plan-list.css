@@ -1,0 +1,106 @@
+/* src/app/plan-list/plan-list.css */
+
+.plan-list-container {
+  padding: 1rem 1.5rem;
+}
+
+.plan-list-container h2 {
+  margin-bottom: 1rem;
+}
+
+.toolbar {
+  margin-bottom: 0.75rem;
+}
+
+.toolbar input {
+  min-width: 260px;
+  padding: 0.35rem 0.5rem;
+}
+
+.table-wrapper {
+  overflow-x: auto;
+}
+
+.tabla-planes {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.tabla-planes th,
+.tabla-planes td {
+  border: 1px solid #ddd;
+  padding: 0.4rem 0.6rem;
+  vertical-align: middle;
+}
+
+.tabla-planes thead {
+  background: #f4f4f4;
+}
+
+.col-acciones {
+  width: 110px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.col-comentario textarea {
+  width: 100%;
+  resize: vertical;
+  min-height: 2rem;
+  font-size: 0.85rem;
+}
+
+.no-data {
+  text-align: center;
+  color: #777;
+  padding: 0.8rem;
+}
+
+.btn-icon {
+  border: none;
+  background: #eee;
+  padding: 0.2rem 0.4rem;
+  margin: 0 0.1rem;
+  cursor: pointer;
+  border-radius: 3px;
+}
+
+.btn-icon:hover {
+  background: #ddd;
+}
+
+/* ====== ICONOS DE ESTADO ====== */
+
+.estado-td {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.estado-td select {
+  font-size: 0.85rem;
+  padding: 0.15rem 0.25rem;
+}
+
+.estado-icon {
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+
+/* Colores por estado */
+.estado-icon.solicitado {
+  color: #007bff; /* azul */
+}
+
+.estado-icon.revision {
+  color: #ff9800; /* naranja */
+}
+
+.estado-icon.denegado {
+  color: #d32f2f; /* rojo */
+}
+
+.estado-icon.validado {
+  color: #2e7d32; /* verde */
+}

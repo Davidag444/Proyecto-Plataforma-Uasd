@@ -1,0 +1,86 @@
+<div class="recintos-header">
+  <h3>Recintos de la Universidad Autónoma de Santo Domingo</h3>
+
+  <div class="recintos-tools">
+    <input
+      type="text"
+      [(ngModel)]="filtro"
+      placeholder="Buscar por nombre o sigla"
+    />
+    <button type="button" (click)="nuevo()">Nuevo Recinto</button>
+  </div>
+</div>
+
+<div class="recintos-body">
+  <!-- Lista -->
+  <div class="recintos-list">
+    <table>
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Sigla</th>
+          <th>Teléfono</th>
+          <th>Correo</th>
+          <th class="col-acciones">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let r of recintosFiltrados">
+          <td>{{ r.nombre }}</td>
+          <td>{{ r.sigla }}</td>
+          <td>{{ r.telefono }}</td>
+          <td>{{ r.correo }}</td>
+          <td class="col-acciones">
+            <button type="button" (click)="editar(r)">Editar</button>
+            <button type="button" (click)="eliminar(r)">⋮</button>
+          </td>
+        </tr>
+        <tr *ngIf="!recintosFiltrados.length">
+          <td colspan="5" class="no-data">
+            No hay recintos registrados.
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Formulario -->
+  <div class="recintos-form">
+    <h4>{{ editando ? 'Editar recinto' : 'Nuevo recinto' }}</h4>
+
+    <form (ngSubmit)="guardarRecinto()">
+      <label>
+        Nombre
+        <input [(ngModel)]="recintoActual.nombre" name="nombre" />
+      </label>
+
+      <label>
+        Sigla
+        <input [(ngModel)]="recintoActual.sigla" name="sigla" />
+      </label>
+
+      <label>
+        Domicilio legal
+        <input
+          [(ngModel)]="recintoActual.domicilioLegal"
+          name="domicilioLegal"
+        />
+      </label>
+
+      <label>
+        Teléfono
+        <input [(ngModel)]="recintoActual.telefono" name="telefono" />
+      </label>
+
+      <label>
+        Correo electrónico
+        <input [(ngModel)]="recintoActual.correo" name="correo" />
+      </label>
+
+      <div class="form-actions">
+        <button type="submit">Guardar</button>
+        <button type="button" (click)="nuevo()">Limpiar</button>
+      </div>
+    </form>
+  </div>
+</div>

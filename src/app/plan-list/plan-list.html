@@ -1,0 +1,112 @@
+<!-- src/app/plan-list/plan-list.html -->
+
+<div class="contenedor-planes">
+  <h2>Mis Planes de Estudio</h2>
+
+  <div class="buscador">
+    <label>
+      Buscar:
+      <input
+        type="text"
+        [(ngModel)]="filtro"
+        placeholder="Filtrar por facultad, plan, nivel o estado..."
+      />
+    </label>
+  </div>
+
+  <table
+    class="tabla-planes"
+    *ngIf="planesFiltrados.length > 0; else noPlanes"
+  >
+    <thead>
+      <tr>
+        <th>Facultad / Departamento</th>
+        <th>Denominación del Plan</th>
+        <th>Nivel</th>
+        <th>Fecha</th>
+        <th>Estado</th>
+        <th>Comentario (si está denegado)</th>
+        <th style="width: 110px; text-align: center">Acciones</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let p of planesFiltrados">
+        <td>{{ p.facultad }}</td>
+        <td>{{ p.nombrePlan }}</td>
+        <td>{{ p.nivel }}</td>
+        <td>{{ p.fechaCreacion | date : 'MM/dd/yy' }}</td>
+
+        <!-- ESTADO + ICONO -->
+        <td class="estado-td">
+          <span
+            class="estado-icon"
+            [ngClass]="{
+              solicitado: p.estado === 'Solicitado',
+              revision: p.estado === 'En revisión',
+              denegado: p.estado === 'Denegado',
+              validado: p.estado === 'Validado'
+            }"
+          >
+            <ng-container [ngSwitch]="p.estado">
+              <span *ngSwitchCase="'Solicitado'">📨</span>
+              <span *ngSwitchCase="'En revisión'">🔍</span>
+              <span *ngSwitchCase="'Denegado'">❌</span>
+              <span *ngSwitchCase="'Validado'">✅</span>
+            </ng-container>
+          </span>
+
+          <select
+            [(ngModel)]="p.estado"
+            (ngModelChange)="onEstadoChange(p, $event)"
+          >
+            <option value="Solicitado">Solicitado</option>
+            <option value="En revisión">En revisión</option>
+            <option value="Denegado">Denegado</option>
+            <option value="Validado">Validado</option>
+          </select>
+        </td>
+
+        <td>
+          <span *ngIf="p.estado !== 'Denegado'">—</span>
+
+          <input
+            *ngIf="p.estado === 'Denegado'"
+            type="text"
+            class="comentario-input"
+            [(ngModel)]="p.comentario"
+            (blur)="onComentarioBlur(p)"
+            placeholder="Escribe el motivo..."
+          />
+        </td>
+
+        <td class="acciones">
+          <!-- Descargar sólo cuando está Validado -->
+          <button
+            *ngIf="p.estado === 'Validado'"
+            type="button"
+            class="btn-accion"
+            title="Descargar plan"
+            (click)="descargarPlan(p)"
+          >
+            ⬇️
+          </button>
+
+          <!-- Eliminar siempre -->
+          <button
+            type="button"
+            class="btn-accion"
+            title="Eliminar plan"
+            (click)="eliminarPlan(p)"
+          >
+            🗑️
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <ng-template #noPlanes>
+    <p>No hay planes de estudio para mostrar.</p>
+  </ng-template>
+</div>

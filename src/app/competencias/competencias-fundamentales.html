@@ -1,0 +1,114 @@
+<!-- src/app/competencias/competencias-fundamentales.html -->
+
+<div class="comp-fund-container">
+  <h2>Competencias fundamentales</h2>
+
+  <!-- Barra superior -->
+  <div class="toolbar">
+    <button class="btn-primary" type="button" (click)="nuevaCompetencia()">
+      + Nueva Competencia
+    </button>
+
+    <div class="filter">
+      <label for="buscar">Buscar competencia</label>
+      <input
+        id="buscar"
+        type="text"
+        [(ngModel)]="filtro"
+        placeholder="Institución, código o nombre..."
+      />
+    </div>
+  </div>
+
+  <!-- Tabla principal -->
+  <div class="table-wrapper">
+    <table class="tabla">
+      <thead>
+        <tr>
+          <th class="col-check"></th>
+          <th>Institución</th>
+          <th>Código</th>
+          <th>Nombre</th>
+          <th class="col-actions">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let c of competenciasFiltradas">
+          <td class="col-check">
+            <input type="checkbox" />
+          </td>
+          <td>{{ c.institucion }}</td>
+          <td>{{ c.codigo }}</td>
+          <td>{{ c.nombre }}</td>
+          <td class="col-actions">
+            <button
+              type="button"
+              title="Editar"
+              (click)="editarCompetencia(c)"
+            >
+              ✏️
+            </button>
+            <button
+              type="button"
+              title="Eliminar"
+              (click)="eliminarCompetencia(c)"
+            >
+              🗑
+            </button>
+          </td>
+        </tr>
+
+        <tr *ngIf="!competenciasFiltradas.length">
+          <td colspan="5" class="no-data">
+            No hay competencias registradas.
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Formulario (modal) -->
+  <div class="modal-backdrop" *ngIf="mostrarForm">
+    <div class="modal">
+      <h3>Competencia Fundamental</h3>
+
+      <form (ngSubmit)="guardarCompetencia()">
+        <div class="form-row">
+          <label>Institución</label>
+          <input
+            type="text"
+            [(ngModel)]="competenciaActual.institucion"
+            name="institucion"
+          />
+        </div>
+
+        <div class="form-row">
+          <label>Código</label>
+          <input
+            type="text"
+            [(ngModel)]="competenciaActual.codigo"
+            name="codigo"
+            required
+          />
+        </div>
+
+        <div class="form-row">
+          <label>Nombre</label>
+          <textarea
+            rows="3"
+            [(ngModel)]="competenciaActual.nombre"
+            name="nombre"
+            required
+          ></textarea>
+        </div>
+
+        <div class="modal-actions">
+          <button type="submit" class="btn-primary">Aceptar</button>
+          <button type="button" class="btn-danger" (click)="cancelarForm()">
+            Cancelar
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

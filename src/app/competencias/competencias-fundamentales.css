@@ -1,0 +1,149 @@
+/* src/app/competencias/competencias-fundamentales.css */
+
+.comp-fund-container {
+  padding: 1.5rem 2rem;
+}
+
+.comp-fund-container h2 {
+  margin-bottom: 1rem;
+}
+
+/* Toolbar */
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.8rem;
+  gap: 1rem;
+}
+
+.filter {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.filter input {
+  min-width: 240px;
+}
+
+/* Botones */
+.btn-primary {
+  border: none;
+  background: #2f6fe4;
+  color: #fff;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.btn-primary:hover {
+  background: #2458c7;
+}
+
+.btn-danger {
+  border: none;
+  background: #e74c3c;
+  color: #fff;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.btn-danger:hover {
+  background: #c0392b;
+}
+
+/* Tabla */
+.table-wrapper {
+  overflow-x: auto;
+}
+
+.tabla {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.tabla th,
+.tabla td {
+  border: 1px solid #ddd;
+  padding: 0.4rem 0.55rem;
+}
+
+.tabla thead {
+  background: #f2f2f2;
+}
+
+.col-check {
+  width: 40px;
+  text-align: center;
+}
+
+.col-actions {
+  width: 110px;
+  text-align: center;
+}
+
+.col-actions button {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 1rem;
+  margin: 0 0.2rem;
+}
+
+.no-data {
+  text-align: center;
+  color: #777;
+}
+
+/* Modal */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal {
+  background: #fff;
+  padding: 1.4rem 1.6rem;
+  border-radius: 6px;
+  width: 480px;
+  max-width: 95%;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.modal h3 {
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+.form-row {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 0.8rem;
+}
+
+.form-row label {
+  font-size: 0.85rem;
+  margin-bottom: 0.2rem;
+}
+
+.form-row input,
+.form-row textarea {
+  padding: 0.35rem 0.45rem;
+  font-size: 0.9rem;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}

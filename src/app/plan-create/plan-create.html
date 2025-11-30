@@ -1,0 +1,378 @@
+<!-- src/app/plan-create/plan-create.html -->
+
+<div class="contenedor-plan">
+  <h2>Creación de Plan de Estudio</h2>
+
+  <!-- Barra de progreso -->
+  <div class="progress-wrapper">
+    <div class="progress-bar">
+      <div class="progress-bar-fill" [style.width.%]="progreso"></div>
+    </div>
+    <span class="progress-label">{{ progreso | number : '1.0-0' }}%</span>
+  </div>
+
+  <!-- Pasos -->
+  <div class="pasos">
+    <div
+      class="paso"
+      [class.activo]="pasoActual === 0"
+      (click)="irPaso(0)"
+    >
+      0. Parámetros iniciales
+    </div>
+    <div
+      class="paso"
+      [class.activo]="pasoActual === 1"
+      (click)="irPaso(1)"
+    >
+      1. Introducción
+    </div>
+    <div
+      class="paso"
+      [class.activo]="pasoActual === 2"
+      (click)="irPaso(2)"
+    >
+      2. Descripción
+    </div>
+    <div
+      class="paso"
+      [class.activo]="pasoActual === 3"
+      (click)="irPaso(3)"
+    >
+      3. Justificación
+    </div>
+    <div
+      class="paso"
+      [class.activo]="pasoActual === 4"
+      (click)="irPaso(4)"
+    >
+      4. Gestión y Bienestar
+    </div>
+    <div
+      class="paso"
+      [class.activo]="pasoActual === 5"
+      (click)="irPaso(5)"
+    >
+      5. Competencias
+    </div>
+    <div
+      class="paso"
+      [class.activo]="pasoActual === 6"
+      (click)="irPaso(6)"
+    >
+      6. Planificación Curricular
+    </div>
+  </div>
+
+  <!-- =================== PASO 0 =================== -->
+  <section *ngIf="pasoActual === 0" class="seccion">
+    <h3>0. Parámetros iniciales</h3>
+
+    <div class="form-grid">
+      <label>
+        Denominación del Plan de estudios
+        <input type="text" [(ngModel)]="tituloPlan" />
+      </label>
+
+      <label>
+        Facultad
+        <input type="text" [(ngModel)]="facultad" />
+      </label>
+
+      <label>
+        Escuela / Departamento
+        <input type="text" [(ngModel)]="escuela" />
+      </label>
+
+      <label>
+        Nivel
+        <select [(ngModel)]="nivel">
+          <option>Grado</option>
+          <option>Postgrado</option>
+          <option>Técnico Superior</option>
+        </select>
+      </label>
+
+      <label>
+        Modalidad
+        <select [(ngModel)]="modalidad">
+          <option>Presencial</option>
+          <option>Virtual</option>
+          <option>Mixta</option>
+        </select>
+      </label>
+    </div>
+
+    <div class="acciones-paso">
+      <button class="btn-primario" (click)="siguientePaso()">
+        Siguiente
+      </button>
+    </div>
+  </section>
+
+  <!-- =================== PASO 1 =================== -->
+  <section *ngIf="pasoActual === 1" class="seccion">
+    <h3>1. Introducción</h3>
+
+    <label>
+      Introducción
+      <textarea rows="4" [(ngModel)]="introduccion"></textarea>
+    </label>
+
+    <label>
+      Antecedentes
+      <textarea rows="3" [(ngModel)]="antecedentes"></textarea>
+    </label>
+
+    <label>
+      Fundamentos filosóficos
+      <textarea
+        rows="3"
+        [(ngModel)]="fundamentosFilosoficos"
+      ></textarea>
+    </label>
+
+    <div class="acciones-paso">
+      <button (click)="pasoAnterior()">Anterior</button>
+      <button class="btn-primario" (click)="siguientePaso()">
+        Siguiente
+      </button>
+    </div>
+  </section>
+
+  <!-- =================== PASO 2 =================== -->
+  <section *ngIf="pasoActual === 2" class="seccion">
+    <h3>2. Descripción</h3>
+
+    <div class="form-grid">
+      <label>
+        Área disciplinaria
+        <input type="text" [(ngModel)]="areaDisciplinaria" />
+      </label>
+
+      <label>
+        Área de conocimiento
+        <input type="text" [(ngModel)]="areaConocimiento" />
+      </label>
+
+      <label>
+        Duración en períodos (semestres, etc.)
+        <input type="number" [(ngModel)]="duracionPeriodos" />
+      </label>
+
+      <label>
+        Número de plazas
+        <input type="number" [(ngModel)]="plazas" />
+      </label>
+    </div>
+
+    <div class="acciones-paso">
+      <button (click)="pasoAnterior()">Anterior</button>
+      <button class="btn-primario" (click)="siguientePaso()">
+        Siguiente
+      </button>
+    </div>
+  </section>
+
+  <!-- =================== PASO 3 =================== -->
+  <section *ngIf="pasoActual === 3" class="seccion">
+    <h3>3. Justificación</h3>
+    <textarea
+      rows="6"
+      [(ngModel)]="justificacionTexto"
+      placeholder="Justificación del plan..."
+    ></textarea>
+
+    <div class="acciones-paso">
+      <button (click)="pasoAnterior()">Anterior</button>
+      <button class="btn-primario" (click)="siguientePaso()">
+        Siguiente
+      </button>
+    </div>
+  </section>
+
+  <!-- =================== PASO 4 =================== -->
+  <section *ngIf="pasoActual === 4" class="seccion">
+    <h3>4. Gestión y Bienestar estudiantil</h3>
+    <textarea
+      rows="6"
+      [(ngModel)]="gestionBienestarTexto"
+      placeholder="Servicios, acompañamiento, bienestar estudiantil..."
+    ></textarea>
+
+    <div class="acciones-paso">
+      <button (click)="pasoAnterior()">Anterior</button>
+      <button class="btn-primario" (click)="siguientePaso()">
+        Siguiente
+      </button>
+    </div>
+  </section>
+
+  <!-- =================== PASO 5 =================== -->
+  <section *ngIf="pasoActual === 5" class="seccion">
+    <h3>5. Competencias</h3>
+    <textarea
+      rows="6"
+      [(ngModel)]="competenciasTexto"
+      placeholder="Competencias del egresado..."
+    ></textarea>
+
+    <div class="acciones-paso">
+      <button (click)="pasoAnterior()">Anterior</button>
+      <button class="btn-primario" (click)="siguientePaso()">
+        Siguiente
+      </button>
+    </div>
+  </section>
+
+    <!-- =================== PASO 6 =================== -->
+  <section *ngIf="pasoActual === 6" class="seccion">
+    <h3>6.1 Planificación Curricular</h3>
+
+    <button class="btn-add-periodo" (click)="agregarPeriodo()">
+      + Agregar Período
+    </button>
+
+    <div
+      class="semestre-block"
+      *ngFor="let p of periodos; let i = index"
+    >
+      <div class="semestre-header">
+        <span>Semestre {{ p.numero }}</span>
+
+        <div class="semestre-tools">
+          <button
+            class="semestre-tool-btn"
+            title="Eliminar período"
+            (click)="eliminarPeriodo(i)"
+          >
+            🗑️
+          </button>
+        </div>
+      </div>
+
+      <button
+        class="btn-add-asig"
+        (click)="abrirSelectorAsignaturas(i)"
+      >
+        Agregar Asignaturas
+      </button>
+
+      <div class="plan-table-container">
+        <table class="plan-table">
+          <thead>
+            <tr>
+              <th class="col-codigo">Código</th>
+              <th class="col-nombre">Nombre</th>
+              <th class="col-creditos">Créditos</th>
+              <th class="col-ht">HT</th>
+              <th class="col-hp">HP</th>
+              <th class="col-componente">Componente Formación</th>
+              <!-- 👉 NUEVA COLUMNA -->
+              <th class="col-titular">Titular</th>
+              <th class="col-acciones">Acciones</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr *ngFor="let a of p.asignaturas; let j = index">
+              <td>{{ a.codigo }}</td>
+              <td>{{ a.nombre }}</td>
+              <td class="text-center">{{ a.creditos }}</td>
+              <td class="text-center">{{ a.ht }}</td>
+              <td class="text-center">{{ a.hp }}</td>
+              <td>{{ a.componenteFormacion }}</td>
+              <!-- 👉 MOSTRAR TITULAR USANDO EL MISMO MÉTODO DEL MODAL -->
+              <td>{{ getTitularAsignatura(a) }}</td>
+              <td class="col-acciones">
+                <button
+                  class="action-btn"
+                  title="Editar HT/HP"
+                  (click)="editarAsignaturaPeriodo(p, j)"
+                >
+                  ✏️
+                </button>
+                <button
+                  class="action-btn"
+                  title="Eliminar asignatura"
+                  (click)="eliminarAsignaturaDePeriodo(p, j)"
+                >
+                  🗑️
+                </button>
+              </td>
+            </tr>
+
+            <tr class="total-row">
+              <td colspan="2">Total</td>
+              <td class="text-center">{{ totalCreditos(p) }}</td>
+              <td class="text-center">{{ totalHT(p) }}</td>
+              <td class="text-center">{{ totalHP(p) }}</td>
+              <!-- antes era colspan="2"; ahora hay una columna extra (Titular) -->
+              <td colspan="3"></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="acciones-paso">
+      <button (click)="pasoAnterior()">Anterior</button>
+      <button class="btn-primario" (click)="guardarPlanCompleto()">
+        Guardar plan
+      </button>
+    </div>
+  </section>
+
+<!-- ================= MODAL SELECCIÓN ASIGNATURAS ================= -->
+<div class="modal-backdrop" *ngIf="mostrarModalAsignaturas">
+  <div class="modal">
+    <h3>Seleccionar asignaturas para el período</h3>
+
+    <div class="tabla-modal">
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 40px"></th>
+            <th>Código</th>
+            <th>Nombre</th>
+            <th>Créditos</th>
+            <th>HT</th>
+            <th>HP</th>
+            <th>Componente Formación</th>
+            <!-- 🆕 Nueva columna Titular -->
+            <th>Titular</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let a of asignaturasDisponibles">
+            <td>
+              <input
+                type="checkbox"
+                [checked]="estaSeleccionada(a)"
+                (change)="toggleSeleccionAsignatura(a)"
+              />
+            </td>
+            <td>{{ a.codigo }}</td>
+            <td>{{ a.nombre }}</td>
+            <td class="text-center">{{ a.creditos }}</td>
+            <td class="text-center">{{ a.ht }}</td>
+            <td class="text-center">{{ a.hp }}</td>
+            <td>{{ a.area || a.tipo || 'General' }}</td>
+            <!-- 🆕 mostramos el profesor titular -->
+            <td>{{ getTitularAsignatura(a) }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="acciones-modal">
+      <button
+        class="btn-primario"
+        (click)="confirmarSeleccionAsignaturas()"
+      >
+        Aceptar
+      </button>
+      <button (click)="cerrarSelectorAsignaturas()">Cancelar</button>
+    </div>
+  </div>
+</div>

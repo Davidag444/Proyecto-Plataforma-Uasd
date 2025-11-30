@@ -1,0 +1,19 @@
+<!-- src/app/personal/personal-layout.html -->
+<div class="personal-wrapper">
+  <h1>Personal</h1>
+
+  <nav class="personal-tabs">
+    <a
+      routerLink="autoridades"
+      routerLinkActive="active"
+      [routerLinkActiveOptions]="{ exact: true }"
+      >Autoridades</a
+    >
+    <a routerLink="profesores" routerLinkActive="active">Profesores</a>
+    <a routerLink="contactos" routerLinkActive="active">Contactos</a>
+  </nav>
+
+  <section class="personal-content">
+    <router-outlet></router-outlet>
+  </section>
+</div>

@@ -1,0 +1,57 @@
+<!-- src/app/personal/contactos/contactos.html -->
+<h2>Contactos</h2>
+
+<div class="contactos-layout">
+  <form (ngSubmit)="guardar()" class="contactos-form">
+    <label>
+      Nombre
+      <input type="text" [(ngModel)]="modelo.nombre" name="nombre" />
+    </label>
+
+    <label>
+      Correo
+      <input type="email" [(ngModel)]="modelo.correo" name="correo" />
+    </label>
+
+    <label>
+      Teléfono
+      <input
+        type="text"
+        [(ngModel)]="modelo.telefono"
+        name="telefono"
+      />
+    </label>
+
+    <label>
+      Tipo de contacto
+      <input type="text" [(ngModel)]="modelo.tipo" name="tipo" />
+    </label>
+
+    <button class="btn-primary" type="submit">Guardar</button>
+  </form>
+
+  <div class="contactos-list">
+    <table class="table-simple" *ngIf="contactos.length; else noData">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Correo</th>
+          <th>Teléfono</th>
+          <th>Tipo</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let c of contactos">
+          <td>{{ c.nombre }}</td>
+          <td>{{ c.correo }}</td>
+          <td>{{ c.telefono }}</td>
+          <td>{{ c.tipo }}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <ng-template #noData>
+      <p class="empty">No hay contactos registrados.</p>
+    </ng-template>
+  </div>
+</div>

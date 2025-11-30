@@ -1,0 +1,171 @@
+<!-- src/app/personal/profesores/profesores.html -->
+<div class="profesores-wrapper">
+  <div class="profesores-header">
+    <h2>Profesores UASD</h2>
+
+    <div class="profesores-header-actions">
+      <button class="btn-primary" (click)="importarDatos()">
+        ⬆ Importar Datos
+      </button>
+      <button class="btn-primary" (click)="nuevoDocente()">
+        + Nuevo Docente
+      </button>
+      <input
+        type="text"
+        placeholder="Buscar por nombre o cédula"
+        [(ngModel)]="filtro"
+      />
+    </div>
+  </div>
+
+  <div class="profesores-content">
+    <div class="profesores-list">
+      <table class="table-simple">
+        <thead>
+          <tr>
+            <th>Identificación</th>
+            <th>Nombres</th>
+            <th>Categoría</th>
+            <th>Asignaturas</th>
+            <th>Especialidad</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            *ngFor="let p of listaFiltrada"
+            (click)="seleccionar(p)"
+            [class.selected]="p === seleccionado"
+          >
+            <td>{{ p.identificacion }}</td>
+            <td>{{ p.nombres }} {{ p.apellidos }}</td>
+            <td>{{ p.categoria }}</td>
+            <td>
+              {{ (p.asignaturas && p.asignaturas.length)
+                ? descripcionAsignaturas(p.asignaturas)
+                : '—' }}
+            </td>
+            <td>{{ p.especialidad }}</td>
+          </tr>
+          <tr *ngIf="!listaFiltrada.length">
+            <td colspan="5" class="empty">
+              No hay profesores registrados.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="profesores-form">
+      <h3>Información general</h3>
+
+      <form (ngSubmit)="guardar()">
+        <div class="form-row">
+          <label>
+            Tipo de identificación
+            <select
+              [(ngModel)]="modelo.tipoIdentificacion"
+              name="tipoIdentificacion"
+            >
+              <option>Cédula</option>
+              <option>Pasaporte</option>
+            </select>
+          </label>
+
+          <label>
+            Número de identificación
+            <input
+              type="text"
+              [(ngModel)]="modelo.identificacion"
+              name="identificacion"
+            />
+          </label>
+        </div>
+
+        <div class="form-row">
+          <label>
+            Nombres
+            <input
+              type="text"
+              [(ngModel)]="modelo.nombres"
+              name="nombres"
+            />
+          </label>
+
+          <label>
+            Apellidos
+            <input
+              type="text"
+              [(ngModel)]="modelo.apellidos"
+              name="apellidos"
+            />
+          </label>
+        </div>
+
+        <div class="form-row">
+          <label>
+            Teléfono
+            <input
+              type="text"
+              [(ngModel)]="modelo.telefono"
+              name="telefono"
+            />
+          </label>
+
+          <label>
+            Correo electrónico
+            <input
+              type="email"
+              [(ngModel)]="modelo.correo"
+              name="correo"
+            />
+          </label>
+        </div>
+
+        <div class="form-row">
+          <label>
+            Categoría
+            <input
+              type="text"
+              [(ngModel)]="modelo.categoria"
+              name="categoria"
+            />
+          </label>
+
+          <label>
+            Asignaturas que imparte
+            <select
+              multiple
+              [(ngModel)]="modelo.asignaturas"
+              name="asignaturas"
+            >
+              <option
+                *ngFor="let a of asignaturasDisponibles"
+                [ngValue]="a.codigo"
+              >
+                {{ a.codigo }} - {{ a.nombre }}
+              </option>
+            </select>
+            <small class="hint">
+              Mantén presionado Ctrl (o Cmd) para seleccionar varias.
+            </small>
+          </label>
+        </div>
+
+        <div class="form-row">
+          <label class="full">
+            Especialidad / Último nivel académico
+            <input
+              type="text"
+              [(ngModel)]="modelo.especialidad"
+              name="especialidad"
+            />
+          </label>
+        </div>
+
+        <div class="form-actions">
+          <button class="btn-primary" type="submit">Guardar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

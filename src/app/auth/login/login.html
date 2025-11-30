@@ -1,0 +1,104 @@
+<!-- src/app/auth/login/login.html -->
+
+<div class="login-wrapper">
+  <div class="login-card">
+
+    <h1 class="login-title">Acceso a la Plataforma</h1>
+
+    <!-- FORMULARIO DE LOGIN -->
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmitLogin()" class="login-form">
+
+      <div class="form-group">
+        <label for="email">Nombre de usuario (correo)</label>
+        <input
+          id="email"
+          type="email"
+          formControlName="email"
+          placeholder="ejemplo@uasd.com"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="password">Clave</label>
+        <div class="password-wrapper">
+          <input
+            id="password"
+            [type]="showPassword ? 'text' : 'password'"
+            formControlName="password"
+          />
+          <button type="button" class="eye-btn" (click)="togglePassword()">
+            👁
+          </button>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="role">Rol</label>
+        <select id="role" formControlName="role">
+          <option value="Profesor">Profesor</option>
+          <option value="Admin">Admin</option>
+
+        </select>
+      </div>
+
+      <div *ngIf="loginError" class="error-msg">
+        {{ loginError }}
+      </div>
+
+      <div class="login-actions">
+        <a class="link-muted" href="#">Olvidé mi clave</a>
+        <button type="button" class="link-btn" (click)="toggleCreateMode()">
+          {{ createMode ? 'Cancelar' : 'Crear usuario' }}
+        </button>
+      </div>
+
+      <button type="submit" class="primary-btn">
+        Ingresar
+      </button>
+    </form>
+
+    <!-- FORMULARIO DE REGISTRO (debajo, opcional) -->
+    <div *ngIf="createMode" class="register-panel">
+      <h2>Crear usuario</h2>
+
+      <form [formGroup]="registerForm" (ngSubmit)="onSubmitRegister()">
+        <div class="form-row">
+          <label>Nombre</label>
+          <input type="text" formControlName="name" />
+        </div>
+
+        <div class="form-row">
+          <label>Apellido</label>
+          <input type="text" formControlName="lastName" />
+        </div>
+
+        <div class="form-row">
+          <label>Correo</label>
+          <input type="email" formControlName="email" />
+        </div>
+
+        <div class="form-row">
+          <label>Clave</label>
+          <input type="password" formControlName="password" />
+        </div>
+
+        <div class="form-row">
+          <label>Rol</label>
+          <select formControlName="role">
+            <option value="Universidad">Universidad</option>
+            <option value="Facultad">Facultad</option>
+            <option value="Escuela">Escuela / Departamento</option>
+          </select>
+        </div>
+
+        <div *ngIf="registerMessage" [class.ok]="registerOk" class="register-msg">
+          {{ registerMessage }}
+        </div>
+
+        <button type="submit" class="secondary-btn">
+          Guardar usuario
+        </button>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,71 @@
+<!-- src/app/competencias/competencias-especificas.html -->
+
+<div class="comp-container">
+  <h2>Competencias Específicas</h2>
+
+  <div class="toolbar">
+    <button class="btn-primary" (click)="nueva()">+ Nueva Competencia</button>
+
+    <div class="filter">
+      <label for="buscar">Buscar</label>
+      <input id="buscar" type="text" [(ngModel)]="filtro" placeholder="Buscar..." />
+    </div>
+  </div>
+
+  <!-- Tabla -->
+  <div class="table-wrapper">
+    <table class="tabla">
+      <thead>
+        <tr>
+          <th class="col-check"></th>
+          <th>Institución</th>
+          <th>Código</th>
+          <th>Nombre</th>
+          <th class="col-actions">Acciones</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let c of competenciasFiltradas">
+          <td><input type="checkbox" /></td>
+          <td>{{ c.institucion }}</td>
+          <td>{{ c.codigo }}</td>
+          <td>{{ c.nombre }}</td>
+
+          <td class="col-actions">
+            <button (click)="editar(c)" title="Editar">✏️</button>
+            <button (click)="eliminar(c)" title="Eliminar">🗑</button>
+          </td>
+        </tr>
+
+        <tr *ngIf="competenciasFiltradas.length === 0">
+          <td colspan="5" class="no-data">No hay competencias registradas</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal-backdrop" *ngIf="mostrarForm">
+    <div class="modal">
+      <h3>Competencia Específica</h3>
+
+      <form (ngSubmit)="guardar()">
+        <div class="form-row">
+          <label>Código</label>
+          <input type="text" [(ngModel)]="competenciaActual.codigo" name="codigo" required />
+        </div>
+
+        <div class="form-row">
+          <label>Nombre</label>
+          <textarea rows="3" [(ngModel)]="competenciaActual.nombre" name="nombre" required></textarea>
+        </div>
+
+        <div class="modal-actions">
+          <button type="submit" class="btn-primary">Aceptar</button>
+          <button type="button" class="btn-danger" (click)="cancelar()">Cancelar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

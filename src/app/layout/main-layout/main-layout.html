@@ -1,0 +1,195 @@
+<!-- src/app/layout/main-layout/main-layout.html -->
+
+<div class="app-root">
+  <!-- TOPBAR -->
+  <header class="topbar">
+    <div class="topbar-title">
+      Plataforma de Planes de Estudio
+    </div>
+
+    <div class="topbar-right" *ngIf="currentUser as user">
+      <span class="welcome-text">
+        Bienvenido {{ user.name }} {{ user.lastName || '' }} ({{ user.email }})
+      </span>
+
+      <button class="profile-icon" type="button" (click)="openProfile()">
+        <i class="fa-solid fa-user"></i>
+      </button>
+
+      <button class="logout-btn" type="button" (click)="logout()">
+        Cerrar sesión
+      </button>
+    </div>
+  </header>
+
+  <div class="layout-body">
+    <!-- SIDEBAR -->
+    <nav class="sidebar">
+      <div class="sidebar-header">
+        Plataforma de Planes de Estudio
+      </div>
+
+      <ul class="nav-list">
+        <!-- Inicio -->
+        <li routerLinkActive="active">
+          <a routerLink="/dashboard" class="nav-item">
+            <i class="fa-solid fa-table-cells"></i>
+            <span>Inicio</span>
+          </a>
+        </li>
+
+        <!-- Ingresar Plan de Estudio -->
+        <li routerLinkActive="active">
+          <a routerLink="/dashboard/planes-nuevo" class="nav-item">
+            <i class="fa-solid fa-plus"></i>
+            <span>Ingresar Plan de Estudio</span>
+          </a>
+        </li>
+
+        <!-- Mis Planes de Estudio -->
+        <li routerLinkActive="active">
+          <a routerLink="/dashboard/planes-mis" class="nav-item">
+            <i class="fa-solid fa-file-lines"></i>
+            <span>Mis Planes de Estudio</span>
+          </a>
+        </li>
+
+        <!-- Asignaturas -->
+        <li routerLinkActive="active">
+          <a routerLink="/dashboard/asignaturas" class="nav-item">
+            <i class="fa-solid fa-book"></i>
+            <span>Asignaturas</span>
+          </a>
+        </li>
+
+        <!-- PERSONAL (con submenú) -->
+        <li class="nav-item-personal" (click)="togglePersonalMenu($event)">
+          <div class="personal-left">
+            <i class="fa-solid fa-users"></i>
+            <span>Personal</span>
+          </div>
+          <span class="arrow" [class.open]="isPersonalMenuOpen">▾</span>
+        </li>
+
+        <li *ngIf="isPersonalMenuOpen" routerLinkActive="active">
+          <a routerLink="/dashboard/personal/autoridades" class="sub-item">
+            Autoridades
+          </a>
+        </li>
+        <li *ngIf="isPersonalMenuOpen" routerLinkActive="active">
+          <a routerLink="/dashboard/personal/profesores" class="sub-item">
+            Profesores
+          </a>
+        </li>
+        <li *ngIf="isPersonalMenuOpen" routerLinkActive="active">
+          <a routerLink="/dashboard/personal/contactos" class="sub-item">
+            Contactos
+          </a>
+        </li>
+
+        <!-- ORGANIZACIÓN (entrada simple) -->
+        <li routerLinkActive="active">
+          <a
+            routerLink="/dashboard/organizacion/recintos"
+            class="nav-item"
+          >
+            <i class="fa-solid fa-sitemap"></i>
+            <span>Organización</span>
+          </a>
+        </li>
+
+        <!-- COMPETENCIAS (con submenú) -->
+        <li
+          class="nav-item-personal"
+          (click)="toggleCompetenciasMenu($event)"
+        >
+          <div class="personal-left">
+            <i class="fa-regular fa-star"></i>
+            <span>Competencias</span>
+          </div>
+          <span class="arrow" [class.open]="isCompetenciasMenuOpen">▾</span>
+        </li>
+
+        <li *ngIf="isCompetenciasMenuOpen" routerLinkActive="active">
+          <a
+            routerLink="/dashboard/competencias/fundamentales"
+            class="sub-item"
+          >
+            Fundamentales
+          </a>
+        </li>
+
+        <li *ngIf="isCompetenciasMenuOpen" routerLinkActive="active">
+          <a
+            routerLink="/dashboard/competencias/especificas"
+            class="sub-item"
+          >
+            Específicas
+          </a>
+        </li>
+
+        <!-- EDUCACIÓN VIRTUAL -->
+        <li routerLinkActive="active">
+          <a routerLink="/dashboard/educacion-virtual" class="nav-item">
+            <i class="fa-solid fa-display"></i>
+            <span>Educación Virtual</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+
+    <!-- CONTENIDO CENTRAL -->
+    <main class="content">
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+
+  <!-- MODAL PERFIL -->
+  <div class="profile-backdrop" *ngIf="showProfile">
+    <div class="profile-modal">
+      <h2>Perfil de usuario</h2>
+
+      <!-- Vista -->
+      <div *ngIf="!isEditingProfile && currentUser as u">
+        <p><strong>Nombre:</strong> {{ u.name }} {{ u.lastName || '' }}</p>
+        <p><strong>Cargo:</strong> {{ u.role || '—' }}</p>
+        <p><strong>Email:</strong> {{ u.email }}</p>
+
+        <button type="button" (click)="startEditProfile()">Editar</button>
+        <button type="button" (click)="closeProfile()">Cerrar</button>
+      </div>
+
+      <!-- Edición -->
+      <form *ngIf="isEditingProfile && editableUser" (ngSubmit)="saveProfile()">
+        <div class="form-row">
+          <label>Nombre</label>
+          <input type="text" [(ngModel)]="editableUser.name" name="name" />
+        </div>
+
+        <div class="form-row">
+          <label>Apellido</label>
+          <input
+            type="text"
+            [(ngModel)]="editableUser.lastName"
+            name="lastName"
+          />
+        </div>
+
+        <div class="form-row">
+          <label>Cargo</label>
+          <input type="text" [(ngModel)]="editableUser.role" name="role" />
+        </div>
+
+        <div class="form-row">
+          <label>Email</label>
+          <input type="email" [(ngModel)]="editableUser.email" name="email" />
+        </div>
+
+        <div class="profile-actions">
+          <button type="submit">Guardar</button>
+          <button type="button" (click)="closeProfile()">Cancelar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

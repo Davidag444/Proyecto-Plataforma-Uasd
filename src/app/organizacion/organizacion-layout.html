@@ -1,0 +1,32 @@
+<p>organizacion works!</p>
+<div class="org-wrapper">
+  <div class="org-header">
+    <h2>Organización</h2>
+    <p class="org-subtitle">
+      Administración de recintos y departamentos de la Universidad.
+    </p>
+  </div>
+
+  <nav class="org-tabs">
+    <a
+      routerLink="/dashboard/organizacion/recintos"
+      routerLinkActive="active"
+      class="org-tab"
+      [routerLinkActiveOptions]="{ exact: true }"
+    >
+      Recintos
+    </a>
+
+    <a
+      routerLink="/dashboard/organizacion/departamentos"
+      routerLinkActive="active"
+      class="org-tab"
+    >
+      Departamentos
+    </a>
+  </nav>
+
+  <div class="org-content">
+    <router-outlet></router-outlet>
+  </div>
+</div>

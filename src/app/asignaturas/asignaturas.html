@@ -1,0 +1,180 @@
+<!-- src/app/asignaturas/asignaturas.html -->
+<div class="asignaturas-page">
+  <h2>Asignaturas</h2>
+
+  <div class="toolbar">
+    <div class="filter">
+      <label for="filtro">Buscar:</label>
+      <input
+        id="filtro"
+        type="text"
+        [(ngModel)]="filtro"
+        placeholder="Código, nombre, área..."
+      />
+    </div>
+
+    <div class="actions">
+      <button type="button" (click)="abrirFormNueva()">
+        + Nueva asignatura
+      </button>
+
+      <button type="button" (click)="clickImportarDesdeExcel()">
+        Importar desde Excel
+      </button>
+
+      <input
+        #fileInput
+        type="file"
+        accept=".xls,.xlsx,.xlsm"
+        (change)="importarDesdeExcel($event)"
+        hidden
+      />
+    </div>
+  </div>
+
+  <div class="table-wrapper">
+    <table class="tabla-asignaturas">
+      <thead>
+        <tr>
+          <th class="col-codigo">Código</th>
+          <th class="col-nombre">Nombre</th>
+          <th class="col-creditos">Créditos</th>
+          <th class="col-ht">HT</th>
+          <th class="col-hp">HP</th>
+          <th class="col-area">Componente Formación</th>
+          <th>Personal académico</th>
+          <th class="col-acciones">Acciones</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let a of asignaturasFiltradas">
+          <td>{{ a.codigo }}</td>
+          <td>{{ a.nombre }}</td>
+          <td class="numero">{{ a.creditos }}</td>
+          <td class="numero">{{ a.ht }}</td>
+          <td class="numero">{{ a.hp }}</td>
+          <td>{{ a.area || a.tipo }}</td>
+          <td>{{ getPersonalAcademico(a.codigo) }}</td>
+          <td class="acciones">
+            <button type="button" (click)="editar(a)">✏</button>
+            <button type="button" (click)="eliminar(a)">🗑</button>
+          </td>
+        </tr>
+
+        <tr *ngIf="!asignaturasFiltradas.length">
+          <td colspan="8" class="no-data">
+            No hay asignaturas para mostrar.
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Modal creación / edición -->
+<div class="modal-backdrop" *ngIf="mostrarFormNueva">
+  <div class="modal">
+    <h3>{{ editando ? 'Editar asignatura' : 'Nueva asignatura' }}</h3>
+
+    <form (ngSubmit)="guardarNueva()">
+      <div class="form-row">
+        <label for="codigo">Código</label>
+        <input
+          id="codigo"
+          name="codigo"
+          type="text"
+          [(ngModel)]="nuevaAsignatura.codigo"
+          required
+        />
+      </div>
+
+      <div class="form-row">
+        <label for="nombre">Nombre</label>
+        <input
+          id="nombre"
+          name="nombre"
+          type="text"
+          [(ngModel)]="nuevaAsignatura.nombre"
+          required
+        />
+      </div>
+
+      <div class="form-row inline">
+        <div>
+          <label for="creditos">Créditos</label>
+          <input
+            id="creditos"
+            name="creditos"
+            type="number"
+            min="0"
+            [(ngModel)]="nuevaAsignatura.creditos"
+          />
+        </div>
+
+        <div>
+          <label for="ht">HT</label>
+          <input
+            id="ht"
+            name="ht"
+            type="number"
+            min="0"
+            [(ngModel)]="nuevaAsignatura.ht"
+          />
+        </div>
+
+        <div>
+          <label for="hp">HP</label>
+          <input
+            id="hp"
+            name="hp"
+            type="number"
+            min="0"
+            [(ngModel)]="nuevaAsignatura.hp"
+          />
+        </div>
+      </div>
+
+      <div class="form-row">
+        <label for="area">Componente formación</label>
+        <input
+          id="area"
+          name="area"
+          type="text"
+          [(ngModel)]="nuevaAsignatura.area"
+        />
+      </div>
+
+      <!-- Vista sólo lectura de los profesores asociados -->
+      <div class="form-row" *ngIf="editando">
+        <label class="full">
+          Personal académico (profesores que imparten esta asignatura)
+          <select>
+            <option
+              *ngFor="let p of getProfesoresParaAsignatura(
+                nuevaAsignatura.codigo
+              )"
+            >
+              {{ p.nombres }} {{ p.apellidos }}
+            </option>
+            <option
+              *ngIf="
+                !getProfesoresParaAsignatura(nuevaAsignatura.codigo).length
+              "
+              disabled
+            >
+              No hay profesores registrados para esta asignatura.
+            </option>
+          </select>
+        </label>
+      </div>
+
+      <div class="modal-actions">
+        <button type="submit">
+          {{ editando ? 'Guardar cambios' : 'Guardar' }}
+        </button>
+        <button type="button" (click)="cerrarFormNueva()">Cancelar</button>
+      </div>
+    </form>
+  </div>
+</div>

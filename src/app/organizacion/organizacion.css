@@ -1,0 +1,45 @@
+.org-wrapper {
+  padding: 16px 20px;
+}
+
+.org-header h2 {
+  margin: 0 0 4px 0;
+}
+
+.org-subtitle {
+  margin: 0 0 10px 0;
+  font-size: 13px;
+  color: #555;
+}
+
+/* Tabs */
+.org-tabs {
+  display: flex;
+  border-bottom: 1px solid #d0d0d0;
+  margin-bottom: 12px;
+}
+
+.org-tab {
+  padding: 8px 14px;
+  font-size: 13px;
+  cursor: pointer;
+  text-decoration: none;
+  color: #444;
+  border-radius: 4px 4px 0 0;
+  margin-right: 4px;
+  background-color: #f5f5f5;
+}
+
+.org-tab.active {
+  background-color: #ffffff;
+  border: 1px solid #d0d0d0;
+  border-bottom-color: #ffffff;
+  font-weight: 600;
+}
+
+.org-content {
+  background-color: #ffffff;
+  border-radius: 4px;
+  border: 1px solid #e0e0e0;
+  padding: 14px 16px;
+}
