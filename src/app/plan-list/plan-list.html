@@ -1,3 +1,6 @@
+Aquí tienes tu `plan-list.html` corregido (sin el comentario dentro del `[ngClass]` y listo para compilar):
+
+```html
 <!-- src/app/plan-list/plan-list.html -->
 
 <div class="contenedor-planes">
@@ -25,8 +28,8 @@
         <th>Nivel</th>
         <th>Fecha</th>
         <th>Estado</th>
-        <th>Comentario (si está denegado)</th>
-        <th style="width: 110px; text-align: center">Acciones</th>
+        <th>Comentario (si es desfavorable)</th>
+        <th style="width: 140px; text-align: center">Acciones</th>
       </tr>
     </thead>
 
@@ -37,41 +40,76 @@
         <td>{{ p.nivel }}</td>
         <td>{{ p.fechaCreacion | date : 'MM/dd/yy' }}</td>
 
-        <!-- ESTADO + ICONO -->
+        <!-- ESTADO VISUAL, BASADO EN RESULTADO GLOBAL SI EXISTE -->
         <td class="estado-td">
+          <!--
+            Colores antiguos reutilizados:
+            - Favorable    -> validado   (verde)
+            - Mejorable    -> revision   (naranja)
+            - Por Definir  -> solicitado (amarillo/azul)
+            - Desfavorable -> denegado   (rojo)
+          -->
           <span
             class="estado-icon"
             [ngClass]="{
-              solicitado: p.estado === 'Solicitado',
-              revision: p.estado === 'En revisión',
-              denegado: p.estado === 'Denegado',
-              validado: p.estado === 'Validado'
+              solicitado:
+                (p.evaluacion?.resultadoGlobal?.etiqueta === 'Por Definir') ||
+                (!p.evaluacion?.resultadoGlobal && p.estado === 'Solicitado'),
+              revision:
+                (p.evaluacion?.resultadoGlobal?.etiqueta === 'Mejorable') ||
+                (!p.evaluacion?.resultadoGlobal && p.estado === 'En revisión'),
+              denegado:
+                (p.evaluacion?.resultadoGlobal?.etiqueta === 'Desfavorable') ||
+                (!p.evaluacion?.resultadoGlobal && p.estado === 'Denegado'),
+              validado:
+                (p.evaluacion?.resultadoGlobal?.etiqueta === 'Favorable') ||
+                (!p.evaluacion?.resultadoGlobal && p.estado === 'Validado')
             }"
           >
-            <ng-container [ngSwitch]="p.estado">
-              <span *ngSwitchCase="'Solicitado'">📨</span>
-              <span *ngSwitchCase="'En revisión'">🔍</span>
-              <span *ngSwitchCase="'Denegado'">❌</span>
-              <span *ngSwitchCase="'Validado'">✅</span>
+            <!-- Si hay resultado global, mostramos esos nombres -->
+            <ng-container
+              *ngIf="
+                p.evaluacion?.resultadoGlobal as rg;
+                else estadoSimple
+              "
+            >
+              <ng-container [ngSwitch]="rg.etiqueta">
+                <span *ngSwitchCase="'Favorable'">✅ Favorable</span>
+                <span *ngSwitchCase="'Mejorable'">🟡 Mejorable</span>
+                <span *ngSwitchCase="'Por Definir'">📄 Por Definir</span>
+                <span *ngSwitchCase="'Desfavorable'">❌ Desfavorable</span>
+              </ng-container>
             </ng-container>
-          </span>
 
-          <select
-            [(ngModel)]="p.estado"
-            (ngModelChange)="onEstadoChange(p, $event)"
-          >
-            <option value="Solicitado">Solicitado</option>
-            <option value="En revisión">En revisión</option>
-            <option value="Denegado">Denegado</option>
-            <option value="Validado">Validado</option>
-          </select>
+            <!-- Fallback para planes sin evaluación (antiguos) -->
+            <ng-template #estadoSimple>
+              <ng-container [ngSwitch]="p.estado">
+                <span *ngSwitchCase="'Solicitado'">📨 Solicitado</span>
+                <span *ngSwitchCase="'En revisión'">🔍 En revisión</span>
+                <span *ngSwitchCase="'Denegado'">❌ Denegado</span>
+                <span *ngSwitchCase="'Validado'">✅ Validado</span>
+              </ng-container>
+            </ng-template>
+          </span>
         </td>
 
+        <!-- Comentario solo cuando resultado global es Desfavorable
+             (o cuando no hay evaluación pero el estado está Denegado,
+              para compatibilidad con datos antiguos) -->
         <td>
-          <span *ngIf="p.estado !== 'Denegado'">—</span>
+          <span
+            *ngIf="!(
+              p.evaluacion?.resultadoGlobal?.etiqueta === 'Desfavorable' ||
+              (!p.evaluacion?.resultadoGlobal && p.estado === 'Denegado')
+            )"
+            >—</span
+          >
 
           <input
-            *ngIf="p.estado === 'Denegado'"
+            *ngIf="
+              p.evaluacion?.resultadoGlobal?.etiqueta === 'Desfavorable' ||
+              (!p.evaluacion?.resultadoGlobal && p.estado === 'Denegado')
+            "
             type="text"
             class="comentario-input"
             [(ngModel)]="p.comentario"
@@ -81,13 +119,16 @@
         </td>
 
         <td class="acciones">
-          <!-- Descargar sólo cuando está Validado -->
+          <!-- Descargar cuando esté Validado o En revisión
+               (lo cual equivale a Favorable o Mejorable) -->
           <button
-            *ngIf="p.estado === 'Validado'"
             type="button"
             class="btn-accion"
             title="Descargar plan"
             (click)="descargarPlan(p)"
+            [disabled]="
+              p.estado !== 'Validado' && p.estado !== 'En revisión'
+            "
           >
             ⬇️
           </button>
@@ -100,6 +141,16 @@
             (click)="eliminarPlan(p)"
           >
             🗑️
+          </button>
+
+          <!-- ✏️ Editar -->
+          <button
+            type="button"
+            class="btn-accion"
+            title="Editar plan"
+            (click)="editarPlan(p)"
+          >
+            ✏️
           </button>
         </td>
       </tr>

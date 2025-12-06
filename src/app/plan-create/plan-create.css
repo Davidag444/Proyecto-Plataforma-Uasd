@@ -322,3 +322,252 @@ textarea {
   justify-content: flex-end;
   gap: 8px;
 }
+/* ====== Evaluación: tarjetas y estadísticas ====== */
+
+.eval-bloques {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 12px;
+}
+
+.eval-card {
+  border: 1px solid #e5e7eb;
+  border-radius: 4px;
+  padding: 10px 12px;
+  background-color: #ffffff;
+}
+
+.eval-card-header {
+  margin-bottom: 6px;
+}
+
+.eval-opciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  font-size: 13px;
+  margin-bottom: 6px;
+}
+
+.eval-opciones label {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.eval-comentario textarea {
+  width: 100%;
+  resize: vertical;
+}
+
+/* Estadísticas estilo barra */
+
+.eval-estadisticas {
+  margin-top: 20px;
+}
+
+.eval-estadisticas-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.eval-stat {
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 13px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.eval-stat-titulo {
+  font-weight: 600;
+}
+
+.eval-stat-valor {
+  font-size: 12px;
+}
+
+/* Colores por estado (similar a la maqueta) */
+
+.eval-stat-fav {
+  background-color: #e2f7e6;   /* verde muy claro */
+}
+
+.eval-stat-mej {
+  background-color: #fff6d7;   /* amarillo claro */
+}
+
+.eval-stat-pd {
+  background-color: #e3f0ff;   /* azul claro */
+}
+
+.eval-stat-des {
+  background-color: #ffe2e2;   /* rojo claro */
+}
+
+.eval-comentario-general textarea {
+  width: 100%;
+  resize: vertical;
+}
+
+.texto-ayuda {
+  font-size: 13px;
+  color: #555;
+  margin-bottom: 10px;
+}
+/* ===== ESTILOS ESTADÍSTICAS EVALUACIÓN ===== */
+
+.eval-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* En pantallas grandes, texto a la izquierda y stats a la derecha */
+@media (min-width: 992px) {
+  .eval-layout {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+
+  .eval-main {
+    flex: 2;
+  }
+
+  .eval-stats {
+    flex: 1.3;
+  }
+}
+
+.eval-stats {
+  background: #f8f6ff;
+  border-radius: 16px;
+  padding: 1.25rem 1.5rem;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.02),
+    0 10px 25px rgba(15, 23, 42, 0.08);
+}
+
+.eval-stats-title {
+  margin: 0 0 0.75rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #4b5563;
+}
+
+/* Panel general tipo tarjeta dentro del aside */
+.stats-panel {
+  background: #f3e8ff;
+  border-radius: 14px;
+  padding: 0.75rem;
+}
+
+/* Cada fila tiene 2 cajas horizontales */
+.stats-row {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.stats-row:last-child {
+  margin-bottom: 0;
+}
+
+.stat-box {
+  flex: 1;
+  border-radius: 12px;
+  padding: 0.6rem 0.75rem;
+  text-align: center;
+  font-size: 0.9rem;
+  box-shadow: 0 6px 12px rgba(15, 23, 42, 0.05);
+}
+
+/* Colores tipo semáforo suave (puedes ajustarlos a tu gusto) */
+.stat-fav {
+  background: #d1fae5; /* verde suave */
+}
+
+.stat-mej {
+  background: #fef3c7; /* amarillo suave */
+}
+
+.stat-pdef {
+  background: #dbeafe; /* azul suave */
+}
+
+.stat-desf {
+  background: #fee2e2; /* rojo suave */
+}
+
+.stat-label {
+  font-weight: 600;
+  margin-bottom: 0.15rem;
+  color: #374151;
+}
+
+.stat-number {
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: #111827;
+}
+
+.stat-percent {
+  font-weight: 400;
+  font-size: 0.8rem;
+  margin-left: 0.25rem;
+  color: #4b5563;
+}
+
+/* Responsive: en móviles que se apilen las 4 cajas verticalmente */
+@media (max-width: 600px) {
+  .stats-row {
+    flex-direction: column;
+  }
+}
+/* ===== Resultado global de evaluación ===== */
+
+.resultado-global {
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px dashed #e2e8f0;
+}
+
+.resultado-global-title {
+  font-weight: 600;
+  font-size: 0.95rem;
+  margin-bottom: 0.4rem;
+  color: #334155;
+}
+
+.resultado-global-chip {
+  padding: 0.6rem 1rem;
+  border-radius: 999px;
+  text-align: center;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+/* Colores según el resultado */
+.resultado-global-chip.res-fav {
+  background-color: #bbf7d0; /* verde suave */
+  color: #14532d;
+}
+
+.resultado-global-chip.res-mej {
+  background-color: #fef9c3; /* amarillo suave */
+  color: #92400e;
+}
+
+.resultado-global-chip.res-pdef {
+  background-color: #e0f2fe; /* azul suave */
+  color: #1d4ed8;
+}
+
+.resultado-global-chip.res-desf {
+  background-color: #fecaca; /* rojo suave */
+  color: #991b1b;
+}

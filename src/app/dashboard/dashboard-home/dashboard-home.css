@@ -1,4 +1,15 @@
-/* Contenedor de tarjetas */
+/* ===== CONTENEDOR GENERAL ===== */
+.dashboard-container {
+  padding: 24px 32px;
+  background-color: #f4f6fb;
+  min-height: calc(100vh - 60px);
+  box-sizing: border-box;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+}
+
+/* ================= TARJETAS RESUMEN ================= */
+
 .cards-row {
   display: flex;
   gap: 24px;
@@ -6,7 +17,7 @@
 }
 
 /* Tarjeta base */
-.stat-card {
+.card-resumen {
   flex: 1;
   display: flex;
   align-items: center;
@@ -14,64 +25,67 @@
   border-radius: 6px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
   color: #fff;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
 /* Icono grande a la izquierda */
-.stat-icon {
-  font-size: 28px;
-  margin-right: 14px;
+.card-icon {
+  font-size: 32px;
+  margin-right: 16px;
 }
 
-/* Número grande */
-.stat-number {
-  font-size: 26px;
-  font-weight: 600;
+/* Contenido numérico + etiqueta */
+.card-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.card-number {
+  font-size: 28px;
+  font-weight: 700;
   line-height: 1.1;
 }
 
-/* Texto descriptivo */
-.stat-label {
+.card-label {
   font-size: 14px;
-  opacity: 0.9;
+  opacity: 0.95;
 }
 
-/* Colores por estado (similar a la maqueta original) */
-.stat-card.solicitado {
+/* Colores por estado (como la maqueta original) */
+.card-solicitados {
   background-color: #f39c12; /* naranja */
 }
 
-.stat-card.revision {
+.card-revision {
   background-color: #e74c3c; /* rojo */
 }
 
-.stat-card.validado {
+.card-validados {
   background-color: #27ae60; /* verde */
 }
 
-.stat-card.total {
+.card-total {
   background-color: #3498db; /* azul */
 }
 
-/* =================== BLOQUE NOTIFICACIONES =================== */
+/* ================= NOTIFICACIONES ================= */
 
-.notificaciones {
-  margin-top: 24px;
+.notificaciones-section {
+  margin-top: 8px;
   background: #ffffff;
   border-radius: 4px;
   padding: 16px 20px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
-.notificaciones h3 {
+.notificaciones-section h3 {
   margin: 0 0 10px;
   font-size: 16px;
   font-weight: 600;
+  color: #2c3e50;
 }
 
 /* Mensaje cuando no hay notificaciones */
-.notif-empty {
+.no-notif {
   padding: 8px 10px;
   border-radius: 4px;
   background: #f9fafb;
@@ -80,85 +94,124 @@
   color: #666;
 }
 
-/* Lista de notificaciones */
-.notif-list {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  margin-top: 4px;
-}
-
 /* Tarjeta individual de notificación */
 .notif-card {
   display: flex;
   align-items: flex-start;
-  gap: 10px;
   padding: 10px 12px;
   border-radius: 4px;
+  margin-bottom: 8px;
   background: #ffffff;
   border: 1px solid #fee2e2;
-  border-left: 4px solid #e74c3c; /* rojo para alerta */
+  border-left: 4px solid #e74c3c; /* por defecto rojo */
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
   font-size: 14px;
 }
 
-/* Icono de alerta */
+/* Variaciones visuales según tipo */
+.notif-card.denegado {
+  border-left-color: #e74c3c;
+  background-color: #fff5f5;
+}
+
+.notif-card.solicitado {
+  border-left-color: #f39c12;
+  background-color: #fffaf2;
+}
+
+/* Icono */
 .notif-icon {
-  font-size: 18px;
+  font-size: 20px;
+  margin-right: 10px;
   margin-top: 2px;
 }
 
-/* Contenido de la notificación */
+/* Cuerpo de la notificación */
 .notif-body {
   flex: 1;
 }
 
-/* Línea de título (Plan denegado: Nombre...) */
 .notif-title {
   margin-bottom: 3px;
-}
-
-.notif-title-label {
-  font-weight: 600;
-  margin-right: 4px;
-}
-
-.notif-title-name {
   font-weight: 600;
   color: #222;
 }
 
-/* Comentario del evaluador */
-.notif-comment {
+.notif-text {
   color: #444;
   margin-bottom: 4px;
 }
 
-/* Pie: fecha + botón */
-.notif-footer {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px;
-  font-size: 12px;
-}
-
 .notif-date {
+  font-size: 12px;
   color: #777;
 }
 
-/* Botón "Editar plan" dentro de la notificación */
-.notif-btn {
-  border: none;
-  border-radius: 4px;
-  padding: 4px 10px;
-  font-size: 12px;
-  cursor: pointer;
-  background-color: #3498db;
-  color: #ffffff;
-  transition: background-color 0.15s ease;
+/* Acciones (Editar / Evaluar) */
+.notif-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-left: 10px;
 }
 
-.notif-btn:hover {
-  background-color: #2c82c9;
+/* Botón base */
+.btn-notif {
+  padding: 6px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  transition: 0.2s;
+  white-space: nowrap;
+  background-color: #0d6efd; /* azul (Editar) por defecto */
+  color: #fff;
+}
+
+.btn-notif:hover {
+  background-color: #0b5ed7;
+}
+
+/* Botón Evaluar (solo se pinta distinto, la visibilidad la maneja *ngIf en el HTML) */
+.btn-evaluar {
+  background-color: #198754; /* verde */
+}
+
+.btn-evaluar:hover {
+  background-color: #157347;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media (max-width: 992px) {
+  .cards-row {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 640px) {
+  .notif-card {
+    flex-direction: column;
+  }
+
+  .notif-actions {
+    flex-direction: row;
+    justify-content: flex-end;
+    margin-top: 8px;
+  }
+}
+/* Estado visual especial para el rol Evaluador */
+.notif-card.por-evaluar {
+  background-color: #e6f1ff;
+  border-left: 4px solid #1e88e5;
+}
+
+.notif-card.por-evaluar .notif-title {
+  color: #0d47a1;
+  font-weight: 600;
+}
+
+.notif-card.por-evaluar .notif-icon span {
+  font-size: 22px;
 }

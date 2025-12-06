@@ -1,80 +1,112 @@
 <!-- src/app/dashboard/dashboard-home/dashboard-home.html -->
 
-<div class="cards-row">
-  <div class="stat-card solicitado">
-    <div class="stat-icon">📝</div>
-    <div>
-      <div class="stat-number">{{ solicitados }}</div>
-      <div class="stat-label">Planes solicitados</div>
+<div class="dashboard-container">
+  <!-- Tarjetas de resumen -->
+  <div class="cards-row">
+    <div class="card-resumen card-solicitados">
+      <div class="card-icon">📝</div>
+      <div class="card-content">
+        <div class="card-number">{{ solicitados }}</div>
+        <div class="card-label">Planes solicitados</div>
+      </div>
     </div>
-  </div>
 
-  <div class="stat-card revision">
-    <div class="stat-icon">⏳</div>
-    <div>
-      <div class="stat-number">{{ revision }}</div>
-      <div class="stat-label">Planes en revisión</div>
+    <div class="card-resumen card-revision">
+      <div class="card-icon">⏳</div>
+      <div class="card-content">
+        <div class="card-number">{{ revision }}</div>
+        <div class="card-label">Planes en revisión</div>
+      </div>
     </div>
-  </div>
 
-  <div class="stat-card validado">
-    <div class="stat-icon">✅</div>
-    <div>
-      <div class="stat-number">{{ validados }}</div>
-      <div class="stat-label">Planes validados</div>
+    <div class="card-resumen card-validados">
+      <div class="card-icon">✅</div>
+      <div class="card-content">
+        <div class="card-number">{{ validados }}</div>
+        <div class="card-label">Planes validados</div>
+      </div>
     </div>
-  </div>
 
-  <div class="stat-card total">
-    <div class="stat-icon">📊</div>
-    <div>
-      <div class="stat-number">{{ total }}</div>
-      <div class="stat-label">Total de planes</div>
-    </div>
-  </div>
-</div>
-
-<!-- ================= NOTIFICACIONES ================= -->
-<div class="notificaciones">
-  <h3>Notificaciones</h3>
-
-  <!-- Sin notificaciones -->
-  <div *ngIf="notificaciones.length === 0" class="notif-empty">
-    No tienes notificaciones nuevas.
-  </div>
-
-  <!-- Lista de notificaciones (solo planes denegados) -->
-  <div *ngIf="notificaciones.length > 0" class="notif-list">
-    <div
-      class="notif-card"
-      *ngFor="let n of notificaciones"
-    >
-      <div class="notif-icon">⚠️</div>
-
-      <div class="notif-body">
-        <div class="notif-title">
-          <span class="notif-title-label">Plan denegado:</span>
-          <span class="notif-title-name">{{ n.nombrePlan }}</span>
-        </div>
-
-        <div class="notif-comment">
-          {{ n.comentario }}
-        </div>
-
-        <div class="notif-footer">
-          <span class="notif-date">
-            {{ n.fecha | date: 'MM/dd/yy' }}
-          </span>
-
-          <button
-            type="button"
-            class="notif-btn"
-            (click)="editarPlanDesdeNotificacion(n.planId)"
-          >
-            Editar plan
-          </button>
-        </div>
+    <div class="card-resumen card-total">
+      <div class="card-icon">📊</div>
+      <div class="card-content">
+        <div class="card-number">{{ total }}</div>
+        <div class="card-label">Total de planes</div>
       </div>
     </div>
   </div>
+
+  <!-- Notificaciones -->
+  <section class="notificaciones-section">
+    <h3>Notificaciones</h3>
+
+    <div *ngIf="notificaciones.length === 0" class="no-notif">
+      No hay notificaciones por el momento.
+    </div>
+
+    <div
+      class="notif-card"
+      *ngFor="let n of notificaciones"
+      [ngClass]="{
+        denegado: !esEvaluador && n.tipo === 'Denegado',
+        solicitado: !esEvaluador && n.tipo === 'Solicitado',
+        'por-evaluar': esEvaluador
+      }"
+    >
+      <div class="notif-icon">
+        <!-- Vista tradicional para Universidad -->
+        <span *ngIf="!esEvaluador && n.tipo === 'Denegado'">⚠️</span>
+        <span *ngIf="!esEvaluador && n.tipo === 'Solicitado'">📝</span>
+
+        <!-- Vista para Evaluador -->
+        <span *ngIf="esEvaluador">📊</span>
+      </div>
+
+      <div class="notif-body">
+        <div class="notif-title">
+          <!-- Universidad -->
+          <ng-container *ngIf="!esEvaluador">
+            <span *ngIf="n.tipo === 'Denegado'">Plan denegado:</span>
+            <span *ngIf="n.tipo === 'Solicitado'">Plan solicitado:</span>
+          </ng-container>
+
+          <!-- Evaluador -->
+          <ng-container *ngIf="esEvaluador">
+            <span>Plan por evaluar:</span>
+          </ng-container>
+
+          &nbsp;{{ n.nombrePlan }}
+        </div>
+
+        <div class="notif-text">
+          {{ n.comentario }}
+        </div>
+        <div class="notif-date">
+          {{ n.fecha | date : 'dd/MM/yy' }}
+        </div>
+      </div>
+
+      <div class="notif-actions">
+        <!-- Editar: visible solo cuando NO es evaluador (Universidad, etc.) -->
+        <button
+          type="button"
+          class="btn-notif"
+          *ngIf="!esEvaluador"
+          (click)="editarPlanDesdeNotificacion(n.planId)"
+        >
+          Editar
+        </button>
+
+        <!-- Evaluar: solo para rol Evaluador -->
+        <button
+          type="button"
+          class="btn-notif btn-evaluar"
+          *ngIf="esEvaluador"
+          (click)="editarPlanDesdeNotificacion(n.planId)"
+        >
+          Evaluar
+        </button>
+      </div>
+    </div>
+  </section>
 </div>

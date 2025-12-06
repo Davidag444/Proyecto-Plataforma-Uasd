@@ -62,9 +62,21 @@
     >
       6. Planificación Curricular
     </div>
+
+    <!-- Pestaña 7 SOLO visible si es Evaluador -->
+    <div
+      class="paso"
+      *ngIf="esEvaluador"
+      [class.activo]="pasoActual === 7"
+      (click)="irPaso(7)"
+    >
+      7. Evaluación del Plan
+    </div>
   </div>
 
-  <!-- =================== PASO 0 =================== -->
+  <!-- ===== PASOS 0–6 ===== -->
+
+  <!-- Paso 0 -->
   <section *ngIf="pasoActual === 0" class="seccion">
     <h3>0. Parámetros iniciales</h3>
 
@@ -103,6 +115,29 @@
       </label>
     </div>
 
+    <!-- Evaluación de esta página (solo para Evaluador) -->
+    <div class="eval-pagina" *ngIf="evalPaginaActual as ep">
+      <ng-container *ngIf="esEvaluador">
+        <h4>Evaluación</h4>
+        <div class="eval-radio-row">
+          <label class="eval-radio" *ngFor="let opt of evalOpciones">
+            <input
+              type="radio"
+              [name]="'eval-paso-' + pasoActual"
+              [value]="opt.value"
+              [(ngModel)]="ep.resultado"
+            />
+            {{ opt.label }}
+          </label>
+        </div>
+        <textarea
+          rows="2"
+          [(ngModel)]="ep.comentario"
+          placeholder="Comentario sobre esta sección..."
+        ></textarea>
+      </ng-container>
+    </div>
+
     <div class="acciones-paso">
       <button class="btn-primario" (click)="siguientePaso()">
         Siguiente
@@ -110,7 +145,7 @@
     </div>
   </section>
 
-  <!-- =================== PASO 1 =================== -->
+  <!-- Paso 1 -->
   <section *ngIf="pasoActual === 1" class="seccion">
     <h3>1. Introducción</h3>
 
@@ -132,6 +167,29 @@
       ></textarea>
     </label>
 
+    <!-- Evaluación de esta página -->
+    <div class="eval-pagina" *ngIf="evalPaginaActual as ep">
+      <ng-container *ngIf="esEvaluador">
+        <h4>Evaluación</h4>
+        <div class="eval-radio-row">
+          <label class="eval-radio" *ngFor="let opt of evalOpciones">
+            <input
+              type="radio"
+              [name]="'eval-paso-' + pasoActual"
+              [value]="opt.value"
+              [(ngModel)]="ep.resultado"
+            />
+            {{ opt.label }}
+          </label>
+        </div>
+        <textarea
+          rows="2"
+          [(ngModel)]="ep.comentario"
+          placeholder="Comentario sobre esta sección..."
+        ></textarea>
+      </ng-container>
+    </div>
+
     <div class="acciones-paso">
       <button (click)="pasoAnterior()">Anterior</button>
       <button class="btn-primario" (click)="siguientePaso()">
@@ -140,7 +198,7 @@
     </div>
   </section>
 
-  <!-- =================== PASO 2 =================== -->
+  <!-- Paso 2 -->
   <section *ngIf="pasoActual === 2" class="seccion">
     <h3>2. Descripción</h3>
 
@@ -166,6 +224,29 @@
       </label>
     </div>
 
+    <!-- Evaluación de esta página -->
+    <div class="eval-pagina" *ngIf="evalPaginaActual as ep">
+      <ng-container *ngIf="esEvaluador">
+        <h4>Evaluación</h4>
+        <div class="eval-radio-row">
+          <label class="eval-radio" *ngFor="let opt of evalOpciones">
+            <input
+              type="radio"
+              [name]="'eval-paso-' + pasoActual"
+              [value]="opt.value"
+              [(ngModel)]="ep.resultado"
+            />
+            {{ opt.label }}
+          </label>
+        </div>
+        <textarea
+          rows="2"
+          [(ngModel)]="ep.comentario"
+          placeholder="Comentario sobre esta sección..."
+        ></textarea>
+      </ng-container>
+    </div>
+
     <div class="acciones-paso">
       <button (click)="pasoAnterior()">Anterior</button>
       <button class="btn-primario" (click)="siguientePaso()">
@@ -174,7 +255,7 @@
     </div>
   </section>
 
-  <!-- =================== PASO 3 =================== -->
+  <!-- Paso 3 -->
   <section *ngIf="pasoActual === 3" class="seccion">
     <h3>3. Justificación</h3>
     <textarea
@@ -183,6 +264,29 @@
       placeholder="Justificación del plan..."
     ></textarea>
 
+    <!-- Evaluación de esta página -->
+    <div class="eval-pagina" *ngIf="evalPaginaActual as ep">
+      <ng-container *ngIf="esEvaluador">
+        <h4>Evaluación</h4>
+        <div class="eval-radio-row">
+          <label class="eval-radio" *ngFor="let opt of evalOpciones">
+            <input
+              type="radio"
+              [name]="'eval-paso-' + pasoActual"
+              [value]="opt.value"
+              [(ngModel)]="ep.resultado"
+            />
+            {{ opt.label }}
+          </label>
+        </div>
+        <textarea
+          rows="2"
+          [(ngModel)]="ep.comentario"
+          placeholder="Comentario sobre esta sección..."
+        ></textarea>
+      </ng-container>
+    </div>
+
     <div class="acciones-paso">
       <button (click)="pasoAnterior()">Anterior</button>
       <button class="btn-primario" (click)="siguientePaso()">
@@ -191,7 +295,7 @@
     </div>
   </section>
 
-  <!-- =================== PASO 4 =================== -->
+  <!-- Paso 4 -->
   <section *ngIf="pasoActual === 4" class="seccion">
     <h3>4. Gestión y Bienestar estudiantil</h3>
     <textarea
@@ -200,6 +304,29 @@
       placeholder="Servicios, acompañamiento, bienestar estudiantil..."
     ></textarea>
 
+    <!-- Evaluación de esta página -->
+    <div class="eval-pagina" *ngIf="evalPaginaActual as ep">
+      <ng-container *ngIf="esEvaluador">
+        <h4>Evaluación</h4>
+        <div class="eval-radio-row">
+          <label class="eval-radio" *ngFor="let opt of evalOpciones">
+            <input
+              type="radio"
+              [name]="'eval-paso-' + pasoActual"
+              [value]="opt.value"
+              [(ngModel)]="ep.resultado"
+            />
+            {{ opt.label }}
+          </label>
+        </div>
+        <textarea
+          rows="2"
+          [(ngModel)]="ep.comentario"
+          placeholder="Comentario sobre esta sección..."
+        ></textarea>
+      </ng-container>
+    </div>
+
     <div class="acciones-paso">
       <button (click)="pasoAnterior()">Anterior</button>
       <button class="btn-primario" (click)="siguientePaso()">
@@ -208,7 +335,7 @@
     </div>
   </section>
 
-  <!-- =================== PASO 5 =================== -->
+  <!-- Paso 5 -->
   <section *ngIf="pasoActual === 5" class="seccion">
     <h3>5. Competencias</h3>
     <textarea
@@ -217,6 +344,29 @@
       placeholder="Competencias del egresado..."
     ></textarea>
 
+    <!-- Evaluación de esta página -->
+    <div class="eval-pagina" *ngIf="evalPaginaActual as ep">
+      <ng-container *ngIf="esEvaluador">
+        <h4>Evaluación</h4>
+        <div class="eval-radio-row">
+          <label class="eval-radio" *ngFor="let opt of evalOpciones">
+            <input
+              type="radio"
+              [name]="'eval-paso-' + pasoActual"
+              [value]="opt.value"
+              [(ngModel)]="ep.resultado"
+            />
+            {{ opt.label }}
+          </label>
+        </div>
+        <textarea
+          rows="2"
+          [(ngModel)]="ep.comentario"
+          placeholder="Comentario sobre esta sección..."
+        ></textarea>
+      </ng-container>
+    </div>
+
     <div class="acciones-paso">
       <button (click)="pasoAnterior()">Anterior</button>
       <button class="btn-primario" (click)="siguientePaso()">
@@ -225,7 +375,7 @@
     </div>
   </section>
 
-    <!-- =================== PASO 6 =================== -->
+  <!-- Paso 6 -->
   <section *ngIf="pasoActual === 6" class="seccion">
     <h3>6.1 Planificación Curricular</h3>
 
@@ -268,7 +418,6 @@
               <th class="col-ht">HT</th>
               <th class="col-hp">HP</th>
               <th class="col-componente">Componente Formación</th>
-              <!-- 👉 NUEVA COLUMNA -->
               <th class="col-titular">Titular</th>
               <th class="col-acciones">Acciones</th>
             </tr>
@@ -282,7 +431,6 @@
               <td class="text-center">{{ a.ht }}</td>
               <td class="text-center">{{ a.hp }}</td>
               <td>{{ a.componenteFormacion }}</td>
-              <!-- 👉 MOSTRAR TITULAR USANDO EL MISMO MÉTODO DEL MODAL -->
               <td>{{ getTitularAsignatura(a) }}</td>
               <td class="col-acciones">
                 <button
@@ -307,7 +455,6 @@
               <td class="text-center">{{ totalCreditos(p) }}</td>
               <td class="text-center">{{ totalHT(p) }}</td>
               <td class="text-center">{{ totalHP(p) }}</td>
-              <!-- antes era colspan="2"; ahora hay una columna extra (Titular) -->
               <td colspan="3"></td>
             </tr>
           </tbody>
@@ -315,64 +462,245 @@
       </div>
     </div>
 
+    <!-- Evaluación de esta página -->
+    <div class="eval-pagina" *ngIf="evalPaginaActual as ep">
+      <ng-container *ngIf="esEvaluador">
+        <h4>Evaluación</h4>
+        <div class="eval-radio-row">
+          <label class="eval-radio" *ngFor="let opt of evalOpciones">
+            <input
+              type="radio"
+              [name]="'eval-paso-' + pasoActual"
+              [value]="opt.value"
+              [(ngModel)]="ep.resultado"
+            />
+            {{ opt.label }}
+          </label>
+        </div>
+        <textarea
+          rows="2"
+          [(ngModel)]="ep.comentario"
+          placeholder="Comentario sobre esta sección..."
+        ></textarea>
+      </ng-container>
+    </div>
+
     <div class="acciones-paso">
-      <button (click)="pasoAnterior()">Anterior</button>
-      <button class="btn-primario" (click)="guardarPlanCompleto()">
-        Guardar plan
+      <button type="button" (click)="pasoAnterior()">
+        Anterior
+      </button>
+
+      <button
+        type="button"
+        class="btn-primario"
+        (click)="guardarPlanCompleto()"
+      >
+        Guardar plan de estudio
       </button>
     </div>
   </section>
 
-<!-- ================= MODAL SELECCIÓN ASIGNATURAS ================= -->
-<div class="modal-backdrop" *ngIf="mostrarModalAsignaturas">
-  <div class="modal">
-    <h3>Seleccionar asignaturas para el período</h3>
+  <!-- ===== PASO 7 – EVALUACIÓN DEL PLAN (CHECKLIST + ESTADÍSTICAS) ===== -->
+  <section *ngIf="pasoActual === 7" class="seccion">
+    <h3>7. Evaluación del Plan (maqueta)</h3>
 
-    <div class="tabla-modal">
-      <table>
-        <thead>
-          <tr>
-            <th style="width: 40px"></th>
-            <th>Código</th>
-            <th>Nombre</th>
-            <th>Créditos</th>
-            <th>HT</th>
-            <th>HP</th>
-            <th>Componente Formación</th>
-            <!-- 🆕 Nueva columna Titular -->
-            <th>Titular</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let a of asignaturasDisponibles">
-            <td>
-              <input
-                type="checkbox"
-                [checked]="estaSeleccionada(a)"
-                (change)="toggleSeleccionAsignatura(a)"
-              />
-            </td>
-            <td>{{ a.codigo }}</td>
-            <td>{{ a.nombre }}</td>
-            <td class="text-center">{{ a.creditos }}</td>
-            <td class="text-center">{{ a.ht }}</td>
-            <td class="text-center">{{ a.hp }}</td>
-            <td>{{ a.area || a.tipo || 'General' }}</td>
-            <!-- 🆕 mostramos el profesor titular -->
-            <td>{{ getTitularAsignatura(a) }}</td>
-          </tr>
-        </tbody>
-      </table>
+    <p class="nota-evaluacion">
+      Esta sección está pensada para el <strong>evaluador</strong>. El
+      resultado global actualiza el <strong>estado del plan</strong> en
+      <em>Mis Planes de Estudio</em> y alimenta las notificaciones del
+      inicio.
+    </p>
+
+    <!-- Mensaje para usuarios de Universidad -->
+    <div *ngIf="esUniversidad" class="info-universidad">
+      La evaluación detallada del plan solo está disponible para
+      usuarios con rol <strong>Evaluador</strong>. Usted puede
+      completar y guardar el contenido del plan en los pasos 0–6.
     </div>
 
-    <div class="acciones-modal">
-      <button
-        class="btn-primario"
-        (click)="confirmarSeleccionAsignaturas()"
-      >
-        Aceptar
-      </button>
-      <button (click)="cerrarSelectorAsignaturas()">Cancelar</button>
+    <!-- BLOQUE COMPLETO DE EVALUACIÓN SOLO PARA EVALUADOR -->
+    <ng-container *ngIf="esEvaluador">
+      <!-- Datos generales del plan -->
+      <div class="form-grid">
+        <label>
+          Denominación del Plan
+          <input type="text" [value]="tituloPlan" readonly />
+        </label>
+
+        <label>
+          Facultad
+          <input type="text" [value]="facultad" readonly />
+        </label>
+
+        <label>
+          Nivel
+          <input type="text" [value]="nivel" readonly />
+        </label>
+
+        <label>
+          Modalidad
+          <input type="text" [value]="modalidad" readonly />
+        </label>
+      </div>
+
+      <div class="eval-layout">
+        <!-- COLUMNA IZQUIERDA: checklist de características técnicas -->
+        <div class="eval-main">
+          <h4>Características Técnicas</h4>
+
+          <div
+            class="eval-card"
+            *ngFor="let item of evaluacionesTecnicas"
+          >
+            <div class="eval-card-header">
+              <span class="eval-card-title">
+                {{ item.titulo }}
+              </span>
+            </div>
+
+            <div class="eval-radio-row">
+              <label
+                class="eval-radio"
+                *ngFor="let opt of evalOpciones"
+              >
+                <input
+                  type="radio"
+                  [name]="'eval-' + item.id"
+                  [value]="opt.value"
+                  [(ngModel)]="item.resultado"
+                />
+                {{ opt.label }}
+              </label>
+            </div>
+
+            <textarea
+              rows="2"
+              [(ngModel)]="item.comentario"
+              placeholder="Comentario: Explique su evaluación..."
+            ></textarea>
+          </div>
+
+          <!-- Comentario global -->
+          <div class="eval-general">
+            <label>
+              Comentario general del evaluador
+              <textarea
+                rows="3"
+                [(ngModel)]="comentarioGeneralEvaluador"
+                placeholder="Observaciones globales sobre el plan de estudio..."
+              ></textarea>
+            </label>
+          </div>
+
+          <div class="acciones-paso">
+            <button (click)="pasoAnterior()">Anterior</button>
+            <button
+              class="btn-primario"
+              type="button"
+              (click)="evaluarPlanMaqueta()"
+            >
+              Guardar evaluación
+            </button>
+          </div>
+        </div>
+
+        <!-- COLUMNA DERECHA: estadísticas -->
+        <aside class="eval-stats">
+          <h4>Estadísticas de evaluación</h4>
+          <div class="stats-grid">
+            <div class="stat-box stat-fav">
+              <div class="stat-title">Favorable</div>
+              <div class="stat-value">
+                {{ evalStats.counts.Favorable }}
+                ({{ evalStats.porcentaje.Favorable }}%)
+              </div>
+            </div>
+
+            <div class="stat-box stat-mej">
+              <div class="stat-title">Mejorable</div>
+              <div class="stat-value">
+                {{ evalStats.counts.Mejorable }}
+                ({{ evalStats.porcentaje.Mejorable }}%)
+              </div>
+            </div>
+
+            <div class="stat-box stat-pdef">
+              <div class="stat-title">Por Definir</div>
+              <div class="stat-value">
+                {{ evalStats.counts.PorDefinir }}
+                ({{ evalStats.porcentaje.PorDefinir }}%)
+              </div>
+            </div>
+
+            <div class="stat-box stat-desf">
+              <div class="stat-title">Desfavorable</div>
+              <div class="stat-value">
+                {{ evalStats.counts.Desfavorable }}
+                ({{ evalStats.porcentaje.Desfavorable }}%)
+              </div>
+            </div>
+          </div>
+
+          <div class="resultado-global" *ngIf="evalResultadoFinal as r">
+            <div class="resultado-global-title">Resultado global</div>
+            <div class="resultado-global-chip" [ngClass]="r.clase">
+              {{ r.texto }} ({{ r.score }}%)
+            </div>
+          </div>
+        </aside>
+      </div>
+    </ng-container>
+  </section>
+
+  <!-- MODAL SELECCIÓN ASIGNATURAS -->
+  <div class="modal-backdrop" *ngIf="mostrarModalAsignaturas">
+    <div class="modal">
+      <h3>Seleccionar asignaturas para el período</h3>
+
+      <div class="tabla-modal">
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 40px"></th>
+              <th>Código</th>
+              <th>Nombre</th>
+              <th>Créditos</th>
+              <th>HT</th>
+              <th>HP</th>
+              <th>Componente Formación</th>
+              <th>Titular</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let a of asignaturasDisponibles">
+              <td>
+                <input
+                  type="checkbox"
+                  [checked]="estaSeleccionada(a)"
+                  (change)="toggleSeleccionAsignatura(a)"
+                />
+              </td>
+              <td>{{ a.codigo }}</td>
+              <td>{{ a.nombre }}</td>
+              <td class="text-center">{{ a.creditos }}</td>
+              <td class="text-center">{{ a.ht }}</td>
+              <td class="text-center">{{ a.hp }}</td>
+              <td>{{ a.area || a.tipo || 'General' }}</td>
+              <td>{{ getTitularAsignatura(a) }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="acciones-modal">
+        <button
+          class="btn-primario"
+          (click)="confirmarSeleccionAsignaturas()"
+        >
+          Aceptar
+        </button>
+        <button (click)="cerrarSelectorAsignaturas()">Cancelar</button>
+      </div>
     </div>
   </div>
 </div>

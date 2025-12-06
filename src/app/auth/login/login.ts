@@ -8,7 +8,7 @@ import {
   ReactiveFormsModule,
 } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthService } from '../../services/auth.service';
+import { AuthService, UserRole } from '../../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -22,13 +22,14 @@ export class LoginComponent {
   registerForm: FormGroup;
 
   showPassword = false;
-
   createMode = false;
 
   // mensajes de feedback
   loginError = '';
   registerOk = false;
   registerMessage = '';
+
+  rolesDisponibles: UserRole[] = ['Universidad', 'Evaluador'];
 
   constructor(
     private fb: FormBuilder,
@@ -60,11 +61,17 @@ export class LoginComponent {
       return;
     }
 
-    const { email, password } = this.loginForm.value;
+    const { email, password, role } = this.loginForm.value;
 
-    const ok = this.auth.login(email, password);
+    const ok = this.auth.login(
+      email,
+      password,
+      role as UserRole
+    );
+
     if (!ok) {
-      this.loginError = 'Correo o clave incorrectos.';
+      this.loginError =
+        'Correo, clave o rol incorrectos. Verifica que el rol coincida con el perfil del usuario.';
       return;
     }
 
@@ -84,14 +91,24 @@ export class LoginComponent {
 
     const { name, lastName, email, password, role } = this.registerForm.value;
 
-    const res = this.auth.register(email, password, name, lastName, role);
+    const res = this.auth.register(
+      email,
+      password,
+      name,
+      lastName,
+      role as UserRole
+    );
 
     this.registerOk = res.ok;
     this.registerMessage = res.message;
 
     if (res.ok) {
-      // Opcional: loguear directo después de crear
-      this.auth.login(email, password);
+      // 🔹 Login directo usando el mismo rol con el que se registró
+      this.auth.login(
+        email,
+        password,
+        role as UserRole
+      );
       this.router.navigate(['/dashboard']);
     }
   }
@@ -122,14 +139,12 @@ export class LoginComponent {
     this.showPassword = !this.showPassword;
   }
 
-  // 🔹 Abre / cierra el panel de registro (coincide con *ngIf="createMode")
   toggleCreateUser() {
     this.createMode = !this.createMode;
     this.registerOk = false;
     this.registerMessage = '';
   }
 
-  // 🔹 Alias para el (click)="toggleCreateMode()" del HTML
   toggleCreateMode() {
     this.toggleCreateUser();
   }

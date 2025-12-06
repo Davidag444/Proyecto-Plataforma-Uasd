@@ -5,6 +5,13 @@
   <header class="topbar">
     <div class="topbar-title">
       Plataforma de Planes de Estudio
+      <!-- Badge SOLO para evaluador, SOLO en el topbar -->
+      <span
+        *ngIf="currentUser && currentUser.role === 'Evaluador'"
+        class="topbar-role-badge"
+      >
+        Evaluador
+      </span>
     </div>
 
     <div class="topbar-right" *ngIf="currentUser as user">

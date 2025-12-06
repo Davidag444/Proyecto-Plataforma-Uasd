@@ -1,7 +1,18 @@
 <!-- src/app/educacion-virtual/educacion-virtual.html -->
 
 <div class="edu-container">
-  <h2>Educación Virtual</h2>
+  <div class="edu-header">
+    <h2>Educación Virtual</h2>
+
+    <!-- Botón nuevo: imprimir reporte -->
+    <button
+      type="button"
+      class="btn-primary"
+      (click)="imprimirReporteEducacionVirtual()"
+    >
+      🖨 Imprimir reporte
+    </button>
+  </div>
 
   <!-- A) Infraestructura Tecnológica -->
   <section class="section-card">

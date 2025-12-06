@@ -2,6 +2,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 interface PlanEstudioStorage {
   id: number;
@@ -14,11 +15,14 @@ interface PlanEstudioStorage {
   detalle?: any;
 }
 
-interface NotificacionPlanDenegado {
+type TipoNotificacion = 'Denegado' | 'Solicitado';
+
+interface NotificacionPlan {
   planId: number;
   nombrePlan: string;
   comentario: string;
   fecha: string; // ISO
+  tipo: TipoNotificacion;
 }
 
 @Component({
@@ -36,15 +40,29 @@ export class DashboardHomeComponent implements OnInit {
   total = 0;
 
   // Lista de notificaciones a mostrar
-  notificaciones: NotificacionPlanDenegado[] = [];
+  notificaciones: NotificacionPlan[] = [];
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private auth: AuthService
+  ) {}
+
+  // === Helpers de rol para el HTML ===
+  get esUniversidad(): boolean {
+    return this.auth.isUniversidad();
+  }
+
+  get esEvaluador(): boolean {
+    return this.auth.isEvaluador();
+  }
 
   ngOnInit(): void {
     this.actualizarContadoresYNotificaciones();
   }
 
-  private normalizarEstado(raw: string | undefined): 'Solicitado' | 'En revisión' | 'Denegado' | 'Validado' {
+  private normalizarEstado(
+    raw: string | undefined
+  ): 'Solicitado' | 'En revisión' | 'Denegado' | 'Validado' {
     if (!raw) return 'Solicitado';
 
     const v = raw.toLowerCase();
@@ -78,25 +96,42 @@ export class DashboardHomeComponent implements OnInit {
           this.validados++;
           break;
         case 'Denegado':
-          this.solicitados++; // sigue contando como plan existente
+          // lo seguimos contando dentro de "solicitados"
+          this.solicitados++;
           break;
         default:
           this.solicitados++;
       }
 
-      // ---- notificaciones de denegado ----
+      // Base común para la notificación
+      const baseNotif = {
+        planId: p.id,
+        nombrePlan: p.nombrePlan || 'Plan sin nombre',
+        fecha: p.fechaCreacion || new Date().toISOString(),
+      };
+
+      // ---- notificaciones de DENEGADO ----
       if (estadoNorm === 'Denegado') {
         const comentario = (p.comentario || '').trim();
         this.notificaciones.push({
-          planId: p.id,
-          nombrePlan: p.nombrePlan || 'Plan sin nombre',
+          ...baseNotif,
+          tipo: 'Denegado',
           comentario: comentario || 'Revisar observaciones del evaluador.',
-          fecha: p.fechaCreacion || new Date().toISOString(),
+        });
+      }
+
+      // ---- notificaciones de SOLICITADO ----
+      if (estadoNorm === 'Solicitado') {
+        this.notificaciones.push({
+          ...baseNotif,
+          tipo: 'Solicitado',
+          comentario: 'Plan enviado y pendiente de evaluación.',
         });
       }
     }
   }
 
+  // Navega al formulario del plan (misma lógica que antes)
   editarPlanDesdeNotificacion(planId: number): void {
     const stored = localStorage.getItem('planes_estudio');
     if (!stored) return;
@@ -105,7 +140,7 @@ export class DashboardHomeComponent implements OnInit {
     const plan = planes.find((p) => p.id === planId);
     if (!plan) return;
 
-    // Guardamos el plan a editar para que lo lea el creador
+    // Guardamos el plan a editar para que lo lea el creador / evaluador
     localStorage.setItem('plan_en_edicion', JSON.stringify(plan));
 
     // Navegamos al creador dentro del dashboard

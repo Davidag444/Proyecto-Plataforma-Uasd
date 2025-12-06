@@ -27,8 +27,22 @@
 }
 
 .topbar-title {
-  font-size: 16px;
+  font-size: 18px;          /* un poco más grande */
   font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Badge SOLO arriba, más grande y verdoso */
+.topbar-role-badge {
+  padding: 4px 14px;
+  border-radius: 999px;
+  background-color: #1abc9c;   /* verde azulado */
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 600;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.25);
 }
 
 .topbar-right {
@@ -126,7 +140,7 @@ li.active > .nav-item {
   font-weight: 600;
 }
 
-/* Menú colapsable (usado para Personal y Competencias) */
+/* Menú colapsable (Personal / Competencias) */
 
 .nav-item-personal {
   display: flex;

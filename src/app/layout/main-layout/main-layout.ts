@@ -43,6 +43,10 @@ export class MainLayoutComponent {
     return this.auth.getCurrentUser();
   }
 
+  get esEvaluador(): boolean {
+    return this.auth.isEvaluador();
+  }
+
   // --- Perfil ---
   openProfile() {
     this.showProfile = true;

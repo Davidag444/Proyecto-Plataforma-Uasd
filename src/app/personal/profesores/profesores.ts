@@ -13,6 +13,9 @@ import {
   Profesor,
 } from '../../services/personal.service';
 
+// jsPDF global (incluido por <script> en index.html)
+declare const jsPDF: any;
+
 @Component({
   selector: 'app-profesores',
   standalone: true,
@@ -137,5 +140,52 @@ export class ProfesoresComponent implements OnInit {
     return codigos
       .map((c) => `${c} - ${mapa.get(c) ?? ''}`)
       .join(', ');
+  }
+
+  // ==========================
+  // REPORTE PDF
+  // ==========================
+  imprimirReporteProfesores(): void {
+    const data = this.listaFiltrada;
+    if (!data.length) {
+      alert('No hay profesores para imprimir.');
+      return;
+    }
+
+    const doc = new jsPDF('l', 'pt', 'a4');
+    doc.setFontSize(14);
+    doc.text('Reporte de Profesores UASD', 40, 40);
+
+    const body = data.map((p) => [
+      p.identificacion,
+      `${p.nombres} ${p.apellidos}`,
+      p.categoria || '',
+      (p.asignaturas && p.asignaturas.length
+        ? this.descripcionAsignaturas(p.asignaturas)
+        : '—'),
+      p.especialidad || '',
+      p.correo || '',
+      p.telefono || '',
+    ]);
+
+    (doc as any).autoTable({
+      head: [
+        [
+          'Identificación',
+          'Nombre',
+          'Categoría',
+          'Asignaturas que imparte',
+          'Especialidad',
+          'Correo',
+          'Teléfono',
+        ],
+      ],
+      body,
+      startY: 60,
+      styles: { fontSize: 8 },
+      headStyles: { fillColor: [13, 110, 253] },
+    });
+
+    doc.save('reporte-profesores.pdf');
   }
 }

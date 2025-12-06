@@ -2,12 +2,15 @@
 
 <div class="login-wrapper">
   <div class="login-card">
-
     <h1 class="login-title">Acceso a la Plataforma</h1>
 
     <!-- FORMULARIO DE LOGIN -->
-    <form [formGroup]="loginForm" (ngSubmit)="onSubmitLogin()" class="login-form">
-
+    <form
+      [formGroup]="loginForm"
+      (ngSubmit)="onSubmitLogin()
+      "
+      class="login-form"
+    >
       <div class="form-group">
         <label for="email">Nombre de usuario (correo)</label>
         <input
@@ -35,9 +38,9 @@
       <div class="form-group">
         <label for="role">Rol</label>
         <select id="role" formControlName="role">
-          <option value="Profesor">Profesor</option>
-          <option value="Admin">Admin</option>
-
+          <!-- decorativo: el rol real se toma del usuario registrado -->
+          <option value="Universidad">Universidad</option>
+          <option value="Evaluador">Evaluador</option>
         </select>
       </div>
 
@@ -46,7 +49,9 @@
       </div>
 
       <div class="login-actions">
-        <a class="link-muted" href="#">Olvidé mi clave</a>
+        <a class="link-muted" href="#" (click)="onRecoverPassword()"
+          >Olvidé mi clave</a
+        >
         <button type="button" class="link-btn" (click)="toggleCreateMode()">
           {{ createMode ? 'Cancelar' : 'Crear usuario' }}
         </button>
@@ -86,12 +91,15 @@
           <label>Rol</label>
           <select formControlName="role">
             <option value="Universidad">Universidad</option>
-            <option value="Facultad">Facultad</option>
-            <option value="Escuela">Escuela / Departamento</option>
+            <option value="Evaluador">Evaluador</option>
           </select>
         </div>
 
-        <div *ngIf="registerMessage" [class.ok]="registerOk" class="register-msg">
+        <div
+          *ngIf="registerMessage"
+          [class.ok]="registerOk"
+          class="register-msg"
+        >
           {{ registerMessage }}
         </div>
 

@@ -4,8 +4,15 @@
   padding: 1.5rem 2rem;
 }
 
-.edu-container h2 {
+.edu-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin-bottom: 1rem;
+}
+
+.edu-container h2 {
+  margin: 0;
 }
 
 .section-card {

@@ -21,6 +21,9 @@ import {
 // XLSX viene desde un <script> en index.html
 declare const XLSX: any;
 
+// jsPDF (y su plugin autoTable) vienen también desde <script> en index.html
+declare const jsPDF: any;
+
 @Component({
   selector: 'app-asignaturas',
   standalone: true,
@@ -81,7 +84,7 @@ export class AsignaturasComponent implements OnInit {
   }
 
   // ==========================
-  //  edición manual jiji
+  //  edición manual
   // ==========================
   abrirFormNueva(): void {
     this.nuevaAsignatura = {
@@ -277,5 +280,67 @@ export class AsignaturasComponent implements OnInit {
 
     reader.readAsArrayBuffer(file);
     input.value = '';
+  }
+
+  // ==========================
+  // REPORTE PDF
+  // ==========================
+  imprimirReporteAsignaturas(): void {
+    console.log('[Asignaturas] Click en imprimir reporte');
+
+    // Verificar que jsPDF esté disponible
+    if (typeof jsPDF === 'undefined' || !jsPDF) {
+      alert(
+        'jsPDF no está cargado. Revisa los <script> de jsPDF y autoTable en index.html.'
+      );
+      return;
+    }
+
+    const data = this.asignaturasFiltradas;
+    if (!data.length) {
+      alert('No hay asignaturas para imprimir.');
+      return;
+    }
+
+    const doc = new jsPDF('l', 'pt', 'a4'); // horizontal
+    doc.setFontSize(14);
+    doc.text('Reporte de Asignaturas', 40, 40);
+
+    const body = data.map((a) => [
+      a.codigo,
+      a.nombre,
+      a.creditos ?? 0,
+      a.ht ?? 0,
+      a.hp ?? 0,
+      a.area || a.tipo || '',
+      this.getPersonalAcademico(a.codigo) || '—',
+    ]);
+
+    if (!(doc as any).autoTable) {
+      alert(
+        'jsPDF.autoTable no está disponible. Falta el script de jspdf-autotable en index.html.'
+      );
+      return;
+    }
+
+    (doc as any).autoTable({
+      head: [
+        [
+          'Código',
+          'Nombre',
+          'Créditos',
+          'HT',
+          'HP',
+          'Componente Formación',
+          'Personal académico',
+        ],
+      ],
+      body,
+      startY: 60,
+      styles: { fontSize: 8 },
+      headStyles: { fillColor: [33, 150, 243] },
+    });
+
+    doc.save('reporte-asignaturas.pdf');
   }
 }
